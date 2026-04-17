@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Der Raum – Dein Begleiter</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f5f4f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  #app {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 480px;
+    height: 100svh;
+    background: #ffffff;
+    position: relative;
+  }
+
+  @media (min-width: 500px) {
+    body { padding: 20px; }
+    #app {
+      height: calc(100svh - 40px);
+      max-height: 780px;
+      border-radius: 20px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+    }
+  }
+
+  #header {
+    padding: 16px 18px;
+    border-bottom: 1px solid #eeede8;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #fff;
+    flex-shrink: 0;
+  }
+
+  #avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #EEEDFE;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  #header-info h1 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a1a1a;
+    letter-spacing: -0.2px;
+  }
+
+  #header-info p {
+    font-size: 12px;
+    color: #888;
+    margin-top: 1px;
+  }
+
+  #online-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #22c55e;
+    display: inline-block;
+    margin-right: 4px;
+  }
+
+  #messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    scroll-behavior: smooth;
+  }
+
+  .msg { display: flex; flex-direction: column; max-width: 82%; gap: 4px; }
+  .msg.user { align-self: flex-end; align-items: flex-end; }
+  .msg.bot { align-self: flex-start; align-items: flex-start; }
+
+  .bubble {
+    padding: 11px 15px;
+    border-radius: 18px;
+    font-size: 14.5px;
+    line-height: 1.55;
+    word-break: break-word;
+  }
+
+  .msg.user .bubble {
+    background: #534AB7;
+    color: #fff;
+    border-bottom-right-radius: 5px;
+  }
+
+  .msg.bot .bubble {
+    background: #f2f1ed;
+    color: #1a1a1a;
+    border-bottom-left-radius: 5px;
+  }
+
+  .timestamp {
+    font-size: 11px;
+    color: #aaa;
+    padding: 0 4px;
+  }
+
+  #suggestions {
+    padding: 8px 16px 6px;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    flex-shrink: 0;
+  }
+
+  #suggestions::-webkit-scrollbar { display: none; }
+
+  .sug {
+    flex-shrink: 0;
+    padding: 7px 13px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    font-size: 12.5px;
+    color: #555;
+    cursor: pointer;
+    background: #fff;
+    white-space: nowrap;
+    transition: all 0.15s;
+  }
+
+  .sug:hover { background: #f2f1ed; border-color: #bbb; }
+  .sug:active { transform: scale(0.97); }
+
+  #input-area {
+    padding: 10px 14px 16px;
+    border-top: 1px solid #eeede8;
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+    background: #fff;
+    flex-shrink: 0;
+  }
+
+  #user-input {
+    flex: 1;
+    padding: 11px 15px;
+    border: 1px solid #ddd;
+    border-radius: 22px;
+    font-size: 14.5px;
+    font-family: inherit;
+    resize: none;
+    background: #f8f7f4;
+    color: #1a1a1a;
+    outline: none;
+    max-height: 120px;
+    line-height: 1.45;
+    transition: border-color 0.2s;
+  }
+
+  #user-input:focus { border-color: #534AB7; background: #fff; }
+  #user-input::placeholder { color: #aaa; }
+
+  #send-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #534AB7;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s, transform 0.1s;
+  }
+
+  #send-btn:hover { background: #3C3489; }
+  #send-btn:active { transform: scale(0.93); }
+  #send-btn:disabled { background: #c5c2e8; cursor: not-allowed; }
+
+  #send-btn svg { width: 18px; height: 18px; fill: white; }
+
+  .typing-bubble {
+    background: #f2f1ed;
+    border-radius: 18px;
+    border-bottom-left-radius: 5px;
+    padding: 14px 18px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #aaa;
+    animation: bounce 1.2s infinite;
+  }
+
+  .dot:nth-child(2) { animation-delay: 0.2s; }
+  .dot:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes bounce {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-7px); }
+  }
+
+  #error-banner {
+    display: none;
+    background: #fff3f3;
+    border: 1px solid #fcc;
+    color: #c00;
+    font-size: 13px;
+    padding: 10px 16px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+
+<div id="app">
+  <div id="header">
+    <div id="avatar">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="3" fill="#534AB7"/>
+        <circle cx="12" cy="12" r="7.5" stroke="#534AB7" stroke-width="1.5" fill="none"/>
+        <circle cx="12" cy="12" r="11" stroke="#AFA9EC" stroke-width="0.8" fill="none"/>
+      </svg>
+    </div>
+    <div id="header-info">
+      <h1>Der Raum</h1>
+      <p><span id="online-dot"></span>Begleiter der Buchreihe</p>
+    </div>
+  </div>
+
+  <div id="error-banner" id="error-banner">
+    Bitte trage deinen API-Key in die Datei ein (Zeile mit API_KEY).
+  </div>
+
+  <div id="messages"></div>
+
+  <div id="suggestions">
+    <div class="sug" onclick="sendSuggestion(this.textContent)">Warum höre ich nicht auf mich selbst?</div>
+    <div class="sug" onclick="sendSuggestion(this.textContent)">Was ist der Unterschied zwischen Schmerz und Leiden?</div>
+    <div class="sug" onclick="sendSuggestion(this.textContent)">Wie finde ich innere Stille?</div>
+    <div class="sug" onclick="sendSuggestion(this.textContent)">Welches Buch passt zu mir?</div>
+  </div>
+
+  <div id="input-area">
+    <textarea id="user-input" rows="1" placeholder="Schreib deine Frage..."></textarea>
+    <button id="send-btn" onclick="handleSend()">
+      <svg viewBox="0 0 24 24"><path d="M2 21L23 12 2 3v7l15 2-15 2v7z"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+const API_KEY = "DEIN_API_KEY_HIER";
+
+const SYSTEM = `Du bist der Begleiter dieser Buchreihe. Kein Assistent. Kein Chatbot. Ein Gesprächspartner, der denselben Raum kennt, um den es in diesen Büchern geht – und der von dort aus antwortet.
+
+Du sprichst die Leser mit Du an. Direkt, klar, ohne Umwege.
+
+KERNPHILOSOPHIE:
+Zwischen jedem Reiz und jeder Reaktion gibt es einen Raum. Dieser Raum ist winzig. Er ist schnell. Und er ist der einzige Ort, an dem echte menschliche Freiheit, kreative Lösungen und bewusstes Handeln entstehen können.
+
+Die Bücher dieser Reihe öffnen verschiedene Türen in diesen Raum:
+- Buch 1 – Du entscheidest: Der Weg über den Willen. Warum du immer tust, was du willst – und was du damit anfangen kannst.
+- Buch 2 – Schmerz endet, Leiden ist eine Wahl: Der Unterschied zwischen dem, was passiert, und dem, was dein Kopf daraus macht.
+- Buch 3 – Stille: Warum Lärm nicht von außen kommt – und was wirklich hinter der Unruhe steckt.
+
+SPRACHE:
+- Kurze Sätze. Wirkung vor Ausführlichkeit.
+- Konkrete Alltagsbilder statt abstrakter Konzepte.
+- Wohlwollend, nie belehrend. Klar, nie hart.
+- NIEMALS Motivationsrhetorik oder leere Affirmationen.
+- Maximal 4–5 Sätze pro Antwort.
+
+WAS DU NICHT TUST:
+- Keine allgemeine Lebensberatung außerhalb der Bücher.
+- Keine psychologischen Diagnosen.
+- Keine Bewertung anderer Autoren oder Bücher.
+- Keine politischen oder religiösen Meinungen.`;
+
+let history = [];
+let isLoading = false;
+
+const messagesEl = document.getElementById('messages');
+const inputEl = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+
+function getTime() {
+  return new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+}
+
+function addMessage(role, text) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  div.innerHTML = `<div class="bubble">${text.replace(/\n/g, '<br>')}</div><span class="timestamp">${getTime()}</span>`;
+  messagesEl.appendChild(div);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+  return div;
+}
+
+function showTyping() {
+  const div = document.createElement('div');
+  div.className = 'msg bot';
+  div.id = 'typing-indicator';
+  div.innerHTML = `<div class="typing-bubble"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>`;
+  messagesEl.appendChild(div);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+function removeTyping() {
+  document.getElementById('typing-indicator')?.remove();
+}
+
+function sendSuggestion(text) {
+  if (isLoading) return;
+  inputEl.value = text;
+  handleSend();
+}
+
+inputEl.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); }
+});
+
+inputEl.addEventListener('input', () => {
+  inputEl.style.height = 'auto';
+  inputEl.style.height = Math.min(inputEl.scrollHeight, 120) + 'px';
+});
+
+async function handleSend() {
+  const text = inputEl.value.trim();
+  if (!text || isLoading) return;
+
+  if (API_KEY === "DEIN_API_KEY_HIER") {
+    document.getElementById('error-banner').style.display = 'block';
+    return;
+  }
+
+  inputEl.value = '';
+  inputEl.style.height = 'auto';
+  isLoading = true;
+  sendBtn.disabled = true;
+
+  addMessage('user', text);
+  history.push({ role: 'user', content: text });
+  showTyping();
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': API_KEY,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 600,
+        system: SYSTEM,
+        messages: history
+      })
+    });
+
+    const data = await res.json();
+    removeTyping();
+
+    if (data.error) {
+      addMessage('bot', 'Ein Fehler ist aufgetreten: ' + data.error.message);
+    } else {
+      const reply = data.content?.[0]?.text || 'Keine Antwort erhalten.';
+      history.push({ role: 'assistant', content: reply });
+      addMessage('bot', reply);
+    }
+  } catch (e) {
+    removeTyping();
+    addMessage('bot', 'Verbindung unterbrochen. Bitte versuche es nochmal.');
+  }
+
+  isLoading = false;
+  sendBtn.disabled = false;
+  inputEl.focus();
+}
+
+addMessage('bot', 'Du kennst den Moment, in dem du etwas tust und gleichzeitig denkst: „Warum mache ich das eigentlich?"\n\nDas ist er. Der Raum. Ich bin hier, um ihn mit dir zu erkunden. Was beschäftigt dich gerade?');
+</script>
+</body>
+</html>
