@@ -1,4 +1,4 @@
-export default async function handler(req, res) {
+const handler = async function (req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method Not Allowed" });
   }
@@ -47,4 +47,6 @@ Halte Antworten klar und nicht zu lang. Stelle gerne eine Rückfrage, wenn es de
   } catch (err) {
     return res.status(500).json({ error: "Serverfehler: " + err.message });
   }
-}
+};
+
+module.exports = handler;
