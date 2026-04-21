@@ -69,6 +69,7 @@
     #sendBtn { background: var(--accent); border: none; border-radius: 14px; width: 50px; height: 50px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.2s; box-shadow: 0 2px 8px rgba(110,140,110,0.3); }
     #sendBtn:hover { background: var(--accent-dark); }
     #sendBtn:disabled { opacity: 0.4; cursor: not-allowed; }
+    #sendBtn { touch-action: manipulation; -webkit-tap-highlight-color: transparent; user-select: none; }
     #sendBtn svg { width: 20px; height: 20px; fill: white; }
     .footer-actions { display: flex; justify-content: center; padding: 8px 0 20px; }
     #clearBtn { background: none; border: none; color: var(--text-muted); font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 300; cursor: pointer; padding: 6px 12px; border-radius: 20px; transition: all 0.2s; }
@@ -105,7 +106,7 @@
     <div class="input-area">
       <div class="input-row">
         <textarea id="userInput" placeholder="Schreib deine Frage ..." rows="1"></textarea>
-        <button id="sendBtn" aria-label="Senden">
+        <button id="sendBtn" aria-label="Senden" ontouchend="handleSend(event)" onclick="handleSend(event)">
           <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
         </button>
       </div>
@@ -234,6 +235,12 @@ function scrollBottom() {
 }
 
 var inputEl = document.getElementById("userInput");
+
+function handleSend(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  sendMessage();
+}
 var sendBtn = document.getElementById("sendBtn");
 
 inputEl.addEventListener("input", function() {
