@@ -12,84 +12,86 @@
   <meta name="theme-color" content="#f5f2ec" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
-    :root {
-      --bg: #f5f2ec;
-      --border: rgba(110,140,110,0.25);
-      --accent: #6e8c6e;
-      --accent-dark: #4f6b4f;
-      --accent-soft: rgba(110,140,110,0.1);
-      --text: #2e3028;
-      --text-muted: #7a8070;
-      --user-bubble: #dde8dd;
-      --bot-bubble: #ffffff;
-      --radius: 18px;
-      --shadow: 0 2px 12px rgba(80,100,80,0.08);
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Jost', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+    :root { --bg:#f5f2ec; --border:rgba(110,140,110,0.25); --accent:#6e8c6e; --accent-dark:#4f6b4f; --accent-soft:rgba(110,140,110,0.1); --text:#2e3028; --text-muted:#7a8070; --user-bubble:#dde8dd; --bot-bubble:#ffffff; --radius:18px; --shadow:0 2px 12px rgba(80,100,80,0.08); }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:'Jost',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; display:flex; flex-direction:column; align-items:center; }
 
     /* LANGUAGE SCREEN */
-    #langScreen { position: fixed; inset: 0; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 100; padding: 32px; text-align: center; }
-    #langScreen img { width: 120px; margin-bottom: 24px; }
-    #langScreen h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 28px; margin-bottom: 6px; }
-    #langScreen h2 em { font-style: italic; color: var(--accent-dark); }
-    #langScreen p { font-size: 13px; color: var(--text-muted); margin-bottom: 32px; font-weight: 300; }
-    .lang-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; max-width: 280px; }
-    .lang-btn { background: white; border: 1px solid var(--border); color: var(--text); font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 400; padding: 14px; border-radius: 14px; cursor: pointer; box-shadow: var(--shadow); transition: all 0.2s; }
-    .lang-btn:hover { background: var(--accent-soft); border-color: var(--accent); }
+    #langScreen { position:fixed; inset:0; background:var(--bg); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:200; padding:32px; text-align:center; }
+    #langScreen.hidden { display:none; }
+    #langScreen img { width:110px; margin-bottom:20px; border-radius:20px; box-shadow:var(--shadow); }
+    #langScreen h2 { font-family:'Cormorant Garamond',serif; font-weight:300; font-size:26px; margin-bottom:6px; }
+    #langScreen h2 em { font-style:italic; color:var(--accent-dark); }
+    #langScreen p { font-size:13px; color:var(--text-muted); margin-bottom:28px; font-weight:300; }
+    .lang-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; width:100%; max-width:280px; }
+    .lang-btn { background:white; border:1px solid var(--border); color:var(--text); font-family:'Jost',sans-serif; font-size:15px; font-weight:400; padding:14px; border-radius:14px; cursor:pointer; box-shadow:var(--shadow); transition:all 0.2s; touch-action:manipulation; }
+    .lang-btn:hover { background:var(--accent-soft); border-color:var(--accent); }
+    #langBackBtn { margin-top:20px; background:none; border:none; color:var(--text-muted); font-family:'Jost',sans-serif; font-size:13px; cursor:pointer; padding:8px 16px; touch-action:manipulation; display:none; }
+
+    /* DONATE SCREEN */
+    #donateScreen { position:fixed; inset:0; background:var(--bg); display:none; flex-direction:column; align-items:center; justify-content:center; z-index:150; padding:32px; text-align:center; }
+    #donateScreen.active { display:flex; }
+    #donateScreen img { width:90px; margin-bottom:16px; border-radius:18px; box-shadow:var(--shadow); }
+    #donateScreen h2 { font-family:'Cormorant Garamond',serif; font-weight:300; font-size:22px; margin-bottom:10px; }
+    #donateScreen h2 em { font-style:italic; color:var(--accent-dark); }
+    .donate-thanks { font-size:13px; color:var(--text-muted); margin-bottom:4px; font-weight:300; line-height:1.7; max-width:300px; }
+    .donate-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; width:100%; max-width:300px; margin:16px 0 10px; }
+    .donate-amt { background:white; border:1px solid var(--border); color:var(--accent-dark); font-family:'Jost',sans-serif; font-size:18px; font-weight:400; padding:16px; border-radius:14px; cursor:pointer; box-shadow:var(--shadow); transition:all 0.2s; text-decoration:none; display:block; touch-action:manipulation; }
+    .donate-amt:hover { background:var(--accent); color:white; border-color:var(--accent); }
+    .donate-free { background:var(--accent-soft); border:1px solid var(--border); color:var(--accent-dark); font-family:'Jost',sans-serif; font-size:14px; font-weight:400; padding:12px 24px; border-radius:14px; cursor:pointer; box-shadow:var(--shadow); transition:all 0.2s; text-decoration:none; display:inline-block; touch-action:manipulation; }
+    .donate-free:hover { background:var(--accent); color:white; border-color:var(--accent); }
+    .donate-back { margin-top:16px; background:none; border:none; color:var(--text-muted); font-family:'Jost',sans-serif; font-size:13px; cursor:pointer; padding:8px 16px; touch-action:manipulation; }
 
     /* APP */
-    #app { display: none; width: 100%; flex-direction: column; align-items: center; min-height: 100vh; }
-    header { width: 100%; max-width: 760px; padding: 24px 20px 14px; text-align: center; border-bottom: 1px solid var(--border); }
-    .logo-eyebrow { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
-    header h1 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(20px, 5vw, 34px); }
-    header h1 em { font-style: italic; color: var(--accent-dark); }
-    .subtitle { margin-top: 6px; font-size: 12px; color: var(--text-muted); font-weight: 300; line-height: 1.6; max-width: 560px; margin-left: auto; margin-right: auto; }
+    #app { display:none; width:100%; flex-direction:column; align-items:center; min-height:100vh; }
+    header { width:100%; max-width:760px; padding:20px 20px 12px; text-align:center; border-bottom:1px solid var(--border); position:relative; }
+    .lang-switch { position:absolute; top:16px; right:14px; background:none; border:1px solid var(--border); border-radius:20px; padding:5px 10px; font-size:13px; cursor:pointer; color:var(--text-muted); touch-action:manipulation; transition:all 0.2s; }
+    .lang-switch:hover { border-color:var(--accent); color:var(--accent-dark); }
+    .logo-eyebrow { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--accent); margin-bottom:6px; }
+    header h1 { font-family:'Cormorant Garamond',serif; font-weight:300; font-size:clamp(20px,5vw,32px); }
+    header h1 em { font-style:italic; color:var(--accent-dark); }
+    .subtitle { margin-top:6px; font-size:12px; color:var(--text-muted); font-weight:300; line-height:1.6; max-width:560px; margin-left:auto; margin-right:auto; padding:0 44px; }
 
     /* CHAT */
-    .chat-wrapper { width: 100%; max-width: 760px; flex: 1; display: flex; flex-direction: column; padding: 0 16px; }
-    #chat { flex: 1; overflow-y: auto; padding: 20px 0 8px; display: flex; flex-direction: column; gap: 14px; min-height: 200px; max-height: calc(100vh - 380px); }
-    #chat::-webkit-scrollbar { width: 4px; }
-    #chat::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-    .msg { display: flex; flex-direction: column; max-width: 85%; animation: fadeUp 0.3s ease; }
-    @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
-    .msg.user { align-self: flex-end; align-items: flex-end; }
-    .msg.bot { align-self: flex-start; align-items: flex-start; }
-    .bubble { padding: 12px 16px; border-radius: var(--radius); font-size: 15px; line-height: 1.7; font-weight: 300; white-space: pre-wrap; box-shadow: var(--shadow); }
-    .msg.user .bubble { background: var(--user-bubble); border: 1px solid rgba(110,140,110,0.3); border-bottom-right-radius: 5px; }
-    .msg.bot .bubble { background: var(--bot-bubble); border: 1px solid rgba(110,140,110,0.15); border-bottom-left-radius: 5px; }
-    .sender { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; padding: 0 4px; }
+    .chat-wrapper { width:100%; max-width:760px; flex:1; display:flex; flex-direction:column; padding:0 16px; }
+    #chat { flex:1; overflow-y:auto; padding:16px 0 8px; display:flex; flex-direction:column; gap:14px; min-height:200px; max-height:calc(100vh - 400px); }
+    #chat::-webkit-scrollbar { width:4px; }
+    #chat::-webkit-scrollbar-thumb { background:var(--border); border-radius:4px; }
+    .msg { display:flex; flex-direction:column; max-width:85%; animation:fadeUp 0.3s ease; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+    .msg.user { align-self:flex-end; align-items:flex-end; }
+    .msg.bot { align-self:flex-start; align-items:flex-start; }
+    .bubble { padding:12px 16px; border-radius:var(--radius); font-size:15px; line-height:1.7; font-weight:300; white-space:pre-wrap; box-shadow:var(--shadow); }
+    .msg.user .bubble { background:var(--user-bubble); border:1px solid rgba(110,140,110,0.3); border-bottom-right-radius:5px; }
+    .msg.bot .bubble { background:var(--bot-bubble); border:1px solid rgba(110,140,110,0.15); border-bottom-left-radius:5px; }
+    .sender { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-muted); margin-bottom:4px; padding:0 4px; }
     .typing span { display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--accent); margin:0 2px; animation:blink 1.2s infinite; }
-    .typing span:nth-child(2) { animation-delay:.2s; }
-    .typing span:nth-child(3) { animation-delay:.4s; }
-    @keyframes blink { 0%,80%,100%{opacity:.25;transform:scale(.8)} 40%{opacity:1;transform:scale(1)} }
-
-    /* SUGGESTIONS */
-    .suggestions { padding: 8px 0 10px; display: flex; flex-wrap: wrap; gap: 8px; }
-    .suggestion-btn { background: white; border: 1px solid var(--border); color: var(--accent-dark); font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 400; padding: 7px 13px; border-radius: 30px; cursor: pointer; transition: all 0.2s; box-shadow: var(--shadow); touch-action: manipulation; }
-    .suggestion-btn:hover { background: var(--accent-soft); border-color: var(--accent); }
-
-    /* INPUT */
-    .input-area { padding: 10px 0 10px; border-top: 1px solid var(--border); }
-    .input-row { display: flex; gap: 10px; align-items: flex-end; }
-    #userInput { flex: 1; background: white; border: 1px solid var(--border); border-radius: 14px; color: var(--text); font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; padding: 12px 16px; resize: none; min-height: 48px; max-height: 120px; outline: none; transition: border-color 0.2s; line-height: 1.5; box-shadow: var(--shadow); }
-    #userInput::placeholder { color: #aab0a0; }
-    #userInput:focus { border-color: var(--accent); }
-    #sendBtn { background: var(--accent); border: none; border-radius: 14px; width: 48px; height: 48px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 8px rgba(110,140,110,0.3); touch-action: manipulation; -webkit-tap-highlight-color: transparent; user-select: none; transition: background 0.2s; }
-    #sendBtn:hover { background: var(--accent-dark); }
-    #sendBtn:disabled { opacity: 0.4; cursor: not-allowed; }
-    #sendBtn svg { width: 20px; height: 20px; fill: white; pointer-events: none; }
+    .typing span:nth-child(2){animation-delay:.2s} .typing span:nth-child(3){animation-delay:.4s}
+    @keyframes blink{0%,80%,100%{opacity:.25;transform:scale(.8)}40%{opacity:1;transform:scale(1)}}
+    .suggestions { padding:8px 0; display:flex; flex-wrap:wrap; gap:7px; }
+    .suggestion-btn { background:white; border:1px solid var(--border); color:var(--accent-dark); font-family:'Jost',sans-serif; font-size:12px; font-weight:400; padding:7px 12px; border-radius:30px; cursor:pointer; transition:all 0.2s; box-shadow:var(--shadow); touch-action:manipulation; }
+    .suggestion-btn:hover { background:var(--accent-soft); border-color:var(--accent); }
+    .input-area { padding:10px 0 8px; border-top:1px solid var(--border); }
+    .input-row { display:flex; gap:10px; align-items:flex-end; }
+    #userInput { flex:1; background:white; border:1px solid var(--border); border-radius:14px; color:var(--text); font-family:'Jost',sans-serif; font-size:15px; font-weight:300; padding:12px 16px; resize:none; min-height:48px; max-height:120px; outline:none; transition:border-color 0.2s; line-height:1.5; box-shadow:var(--shadow); }
+    #userInput::placeholder { color:#aab0a0; }
+    #userInput:focus { border-color:var(--accent); }
+    #sendBtn { background:var(--accent); border:none; border-radius:14px; width:48px; height:48px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 2px 8px rgba(110,140,110,0.3); touch-action:manipulation; -webkit-tap-highlight-color:transparent; user-select:none; transition:background 0.2s; }
+    #sendBtn:hover { background:var(--accent-dark); }
+    #sendBtn:disabled { opacity:0.4; cursor:not-allowed; }
+    #sendBtn svg { width:20px; height:20px; fill:white; pointer-events:none; }
 
     /* FOOTER */
-    .app-footer { width: 100%; max-width: 760px; border-top: 1px solid var(--border); padding: 10px 16px 14px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
-    .footer-support { font-size: 12px; color: var(--text-muted); font-weight: 300; text-align: center; }
-    .danke-btn { background: var(--accent-soft); border: 1px solid var(--border); color: var(--accent-dark); font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 400; padding: 8px 20px; border-radius: 30px; cursor: pointer; text-decoration: none; display: inline-block; transition: all 0.2s; touch-action: manipulation; }
-    .danke-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
-    .footer-clear { background: none; border: none; color: #bbb; font-family: 'Jost', sans-serif; font-size: 11px; cursor: pointer; padding: 2px 8px; touch-action: manipulation; }
-    .footer-clear:hover { color: #c05050; }
-
-    .error-banner { background: #fdf0f0; border: 1px solid #f0c0c0; color: #c05050; border-radius: 12px; padding: 10px 14px; font-size: 13px; margin-top: 8px; }
-    @media (max-width: 480px) { header { padding: 18px 14px 12px; } .chat-wrapper { padding: 0 10px; } .msg { max-width: 93%; } .bubble { font-size: 14px; } }
+    .app-footer { width:100%; max-width:760px; border-top:1px solid var(--border); padding:10px 16px 16px; display:flex; flex-direction:column; align-items:center; gap:6px; }
+    .footer-support { font-size:12px; color:var(--text-muted); font-weight:300; text-align:center; }
+    .footer-support a { color:var(--accent-dark); text-decoration:none; border-bottom:1px solid var(--border); transition:color 0.2s; }
+    .footer-support a:hover { color:var(--accent); }
+    .danke-btn { background:var(--accent-soft); border:1px solid var(--border); color:var(--accent-dark); font-family:'Jost',sans-serif; font-size:13px; font-weight:400; padding:8px 24px; border-radius:30px; cursor:pointer; display:inline-block; transition:all 0.2s; touch-action:manipulation; }
+    .danke-btn:hover { background:var(--accent); color:white; border-color:var(--accent); }
+    .footer-clear { background:none; border:none; color:#ccc; font-family:'Jost',sans-serif; font-size:11px; cursor:pointer; padding:2px 8px; touch-action:manipulation; }
+    .footer-clear:hover { color:#c05050; }
+    .error-banner { background:#fdf0f0; border:1px solid #f0c0c0; color:#c05050; border-radius:12px; padding:10px 14px; font-size:13px; margin-top:8px; }
+    @media(max-width:480px){header{padding:18px 14px 12px} .subtitle{padding:0 44px} .chat-wrapper{padding:0 10px} .msg{max-width:93%} .bubble{font-size:14px}}
   </style>
 </head>
 <body>
@@ -98,18 +100,39 @@
 <div id="langScreen">
   <img src="/icon-512.png" alt="Der Raum" />
   <h2>Dein Moment &ndash;<br><em>Dein Raum</em></h2>
-  <p id="langPrompt">Bitte w&auml;hle deine Sprache / Please choose your language</p>
+  <p>Bitte w&auml;hle deine Sprache / Please choose your language</p>
   <div class="lang-grid">
     <button class="lang-btn" ontouchend="setLang('de',event)" onclick="setLang('de',event)">&#127465;&#127466; Deutsch</button>
     <button class="lang-btn" ontouchend="setLang('en',event)" onclick="setLang('en',event)">&#127468;&#127463; English</button>
     <button class="lang-btn" ontouchend="setLang('es',event)" onclick="setLang('es',event)">&#127466;&#127480; Espa&ntilde;ol</button>
     <button class="lang-btn" ontouchend="setLang('fr',event)" onclick="setLang('fr',event)">&#127467;&#127479; Fran&ccedil;ais</button>
   </div>
+  <button id="langBackBtn" ontouchend="closeLangScreen(event)" onclick="closeLangScreen(event)">&#8592; Zur&uuml;ck</button>
 </div>
 
-<!-- APP -->
+<!-- DONATE SCREEN -->
+<div id="donateScreen">
+  <img src="/icon-512.png" alt="Ich sag JA" />
+  <h2><em id="donateTitleDE">Vielen Dank</em></h2>
+  <div class="donate-thanks">
+    <div>&#127465;&#127466; Vielen Dank f&uuml;r deine Unterst&uuml;tzung!</div>
+    <div>&#127468;&#127463; Thank you so much for your support!</div>
+    <div>&#127466;&#127480; &iexcl;Muchas gracias por tu apoyo!</div>
+    <div>&#127467;&#127479; Merci beaucoup pour votre soutien!</div>
+  </div>
+  <div class="donate-grid">
+    <a class="donate-amt" href="https://paypal.me/IchsagJA/5" target="_blank" rel="noopener">5 &euro;</a>
+    <a class="donate-amt" href="https://paypal.me/IchsagJA/10" target="_blank" rel="noopener">10 &euro;</a>
+    <a class="donate-amt" href="https://paypal.me/IchsagJA/20" target="_blank" rel="noopener">20 &euro;</a>
+    <a class="donate-free" href="https://paypal.me/IchsagJA" target="_blank" rel="noopener" id="donateFreeBtn">Frei</a>
+  </div>
+  <button class="donate-back" id="donateBackBtn" ontouchend="closeDonate(event)" onclick="closeDonate(event)">&#8592; Zur&uuml;ck</button>
+</div>
+
+<!-- MAIN APP -->
 <div id="app">
   <header>
+    <button class="lang-switch" id="langSwitchBtn" ontouchend="openLangScreen(event)" onclick="openLangScreen(event)">&#127758;</button>
     <div class="logo-eyebrow" id="hEyebrow">Buchreihe</div>
     <h1>Dein Moment &ndash; <em>Dein Raum</em></h1>
     <div class="subtitle" id="hSubtitle"></div>
@@ -129,14 +152,14 @@
   </div>
 
   <div class="app-footer">
-    <div class="footer-support" id="footerText"></div>
-    <a id="dankeBtn" class="danke-btn" href="https://paypal.me/IchsagJA" target="_blank" rel="noopener">Danke</a>
-    <button class="footer-clear" id="clearBtn"></button>
+    <div class="footer-support">Meine kleine Unterst&uuml;tzung f&uuml;r <a href="https://ich-sag-ja-zu-mir.de" target="_blank" rel="noopener">ich-sag-JA-zu-mir.de</a></div>
+    <button class="danke-btn" id="dankeBtn" ontouchend="openDonate(event)" onclick="openDonate(event)">Danke</button>
+    <button class="footer-clear" id="clearBtn" onclick="clearHistory()">&#128465; Verlauf l&ouml;schen</button>
   </div>
 </div>
 
 <script>
-var STORAGE_KEY = "derRaum_v2";
+var STORAGE_KEY = "derRaum_v3";
 var LANG_KEY = "derRaum_lang";
 var messages = [];
 var currentLang = "de";
@@ -144,59 +167,63 @@ var currentLang = "de";
 var T = {
   de: {
     eyebrow: "Buchreihe",
-    subtitle: "Dein pers&#246;nlicher Begleiter durch die B&#252;cher &bdquo;Du entscheidest&ldquo;, &bdquo;Schmerz endet, Leiden ist eine Wahl&ldquo; und &bdquo;Stille&ldquo;",
+    subtitle: "Dein pers&#246;nlicher Begleiter durch: &bdquo;Du entscheidest&ldquo;, &bdquo;Schmerz endet, Leiden ist eine Wahl&ldquo; und &bdquo;Stille&ldquo;",
     welcome: "Willkommen im Raum.\n\nIch begleite dich durch die Buecher. Was bewegt dich gerade?",
     placeholder: "Schreib deine Frage ...",
     suggestions: ["Was ist der Raum?", "Bewusster reagieren", "Leiden ist eine Wahl?", "Innere Stille finden"],
-    footerText: "Meine kleine Unterst&#252;tzung f&#252;r Ich-sag-JA-zu-mir.de",
+    sender: "Der Raum",
     danke: "Danke",
-    clear: "Gespr&#228;chsverlauf l&#246;schen",
+    freeBtn: "Frei w&#228;hlbar",
+    backBtn: "&#8592; Zur&#252;ck",
+    clear: "&#128465; Verlauf l&#246;schen",
     clearConfirm: "Gespr&#228;chsverlauf wirklich l&#246;schen?",
     welcomeBack: "Willkommen zur&#252;ck. Was bewegt dich gerade?",
-    sender: "Der Raum",
-    error: "Verbindungsfehler: "
+    error: "Fehler: "
   },
   en: {
     eyebrow: "Book Series",
-    subtitle: "Your personal companion through the books &#8220;You Decide&#8221;, &#8220;Pain Ends, Suffering is a Choice&#8221; and &#8220;Silence&#8221;",
+    subtitle: "Your personal companion through: &#8220;You Decide&#8221;, &#8220;Pain Ends, Suffering is a Choice&#8221; and &#8220;Silence&#8221;",
     welcome: "Welcome to the Space.\n\nI accompany you through the books. What is on your mind?",
     placeholder: "Write your question ...",
-    suggestions: ["What is the space?", "React more consciously", "Suffering is a choice?", "Finding inner silence"],
-    footerText: "My small support for Ich-sag-JA-zu-mir.de",
+    suggestions: ["What is the space?", "React consciously", "Suffering is a choice?", "Finding inner silence"],
+    sender: "The Space",
     danke: "Thank you",
-    clear: "Delete conversation history",
+    freeBtn: "Free amount",
+    backBtn: "&#8592; Back",
+    clear: "&#128465; Delete history",
     clearConfirm: "Really delete conversation history?",
     welcomeBack: "Welcome back. What is on your mind?",
-    sender: "The Space",
-    error: "Connection error: "
+    error: "Error: "
   },
   es: {
     eyebrow: "Serie de Libros",
-    subtitle: "Tu acompa&#241;ante personal a trav&#233;s de los libros &#8220;T&#250; decides&#8221;, &#8220;El dolor termina, el sufrimiento es una elecci&#243;n&#8221; y &#8220;Silencio&#8221;",
-    welcome: "Bienvenido al Espacio.\n\nTe acompa&#241;o a trav&#233;s de los libros. &iquest;Qu&#233; te mueve ahora?",
+    subtitle: "Tu acompa&#241;ante personal: &#8220;T&#250; decides&#8221;, &#8220;El dolor termina, el sufrimiento es una elecci&#243;n&#8221; y &#8220;Silencio&#8221;",
+    welcome: "Bienvenido al Espacio.\n\n&#191;Qu&#233; te mueve ahora?",
     placeholder: "Escribe tu pregunta ...",
-    suggestions: ["&iquest;Qu&#233; es el espacio?", "Reaccionar con m&#225;s consciencia", "&iquest;Sufrir es una elecci&#243;n?", "Encontrar silencio interior"],
-    footerText: "Mi peque&#241;o apoyo para Ich-sag-JA-zu-mir.de",
-    danke: "Gracias",
-    clear: "Borrar historial",
-    clearConfirm: "&iquest;Realmente borrar el historial?",
-    welcomeBack: "Bienvenido de nuevo. &iquest;Qu&#233; te mueve?",
+    suggestions: ["&#191;Qu&#233; es el espacio?", "Reaccionar conscientemente", "&#191;Sufrir es una elecci&#243;n?", "Silencio interior"],
     sender: "El Espacio",
-    error: "Error de conexi&#243;n: "
+    danke: "Gracias",
+    freeBtn: "Libre",
+    backBtn: "&#8592; Volver",
+    clear: "&#128465; Borrar historial",
+    clearConfirm: "&#191;Realmente borrar el historial?",
+    welcomeBack: "Bienvenido de nuevo. &#191;Qu&#233; te mueve?",
+    error: "Error: "
   },
   fr: {
     eyebrow: "Collection de Livres",
-    subtitle: "Votre compagnon personnel &#224; travers les livres &#171;Tu d&#233;cides&#187;, &#171;La douleur se termine, la souffrance est un choix&#187; et &#171;Silence&#187;",
-    welcome: "Bienvenue dans l'Espace.\n\nJe vous accompagne &#224; travers les livres. Qu'est-ce qui vous anime?",
+    subtitle: "Votre compagnon personnel: &#171;Tu d&#233;cides&#187;, &#171;La douleur se termine, la souffrance est un choix&#187; et &#171;Silence&#187;",
+    welcome: "Bienvenue dans l'Espace.\n\nQu'est-ce qui vous anime?",
     placeholder: "&#201;crivez votre question ...",
-    suggestions: ["Qu'est-ce que l'espace?", "R&#233;agir plus consciemment", "Souffrir est un choix?", "Trouver le silence int&#233;rieur"],
-    footerText: "Mon petit soutien pour Ich-sag-JA-zu-mir.de",
+    suggestions: ["Qu'est-ce que l'espace?", "R&#233;agir consciemment", "Souffrir est un choix?", "Silence int&#233;rieur"],
+    sender: "L'Espace",
     danke: "Merci",
-    clear: "Supprimer l'historique",
+    freeBtn: "Libre",
+    backBtn: "&#8592; Retour",
+    clear: "&#128465; Supprimer l'historique",
     clearConfirm: "Vraiment supprimer l'historique?",
     welcomeBack: "Bienvenue. Qu'est-ce qui vous anime?",
-    sender: "L'Espace",
-    error: "Erreur de connexion: "
+    error: "Erreur: "
   }
 };
 
@@ -204,11 +231,36 @@ function setLang(lang, e) {
   if (e) { e.preventDefault(); e.stopPropagation(); }
   currentLang = lang;
   localStorage.setItem(LANG_KEY, lang);
-  document.getElementById("langScreen").style.display = "none";
+  document.getElementById("langScreen").classList.add("hidden");
+  document.getElementById("langBackBtn").style.display = "block";
   var app = document.getElementById("app");
   app.style.display = "flex";
   applyTranslations();
-  loadHistory();
+  if (messages.length === 0) { loadHistory(); }
+}
+
+function openLangScreen(e) {
+  if (e) { e.preventDefault(); e.stopPropagation(); }
+  document.getElementById("langScreen").classList.remove("hidden");
+  document.getElementById("langBackBtn").style.display = "block";
+}
+
+function closeLangScreen(e) {
+  if (e) { e.preventDefault(); e.stopPropagation(); }
+  document.getElementById("langScreen").classList.add("hidden");
+}
+
+function openDonate(e) {
+  if (e) { e.preventDefault(); e.stopPropagation(); }
+  var t = T[currentLang];
+  document.getElementById("donateFreeBtn").textContent = t.freeBtn;
+  document.getElementById("donateBackBtn").innerHTML = t.backBtn;
+  document.getElementById("donateScreen").classList.add("active");
+}
+
+function closeDonate(e) {
+  if (e) { e.preventDefault(); e.stopPropagation(); }
+  document.getElementById("donateScreen").classList.remove("active");
 }
 
 function applyTranslations() {
@@ -216,7 +268,6 @@ function applyTranslations() {
   document.getElementById("hEyebrow").innerHTML = t.eyebrow;
   document.getElementById("hSubtitle").innerHTML = t.subtitle;
   document.getElementById("userInput").placeholder = t.placeholder;
-  document.getElementById("footerText").innerHTML = t.footerText;
   document.getElementById("dankeBtn").textContent = t.danke;
   document.getElementById("clearBtn").innerHTML = t.clear;
   var sugg = document.getElementById("suggestions");
@@ -225,8 +276,8 @@ function applyTranslations() {
     var btn = document.createElement("button");
     btn.className = "suggestion-btn";
     btn.innerHTML = s;
-    btn.ontouchend = function(e) { e.preventDefault(); inputEl.value = btn.innerText; sugg.style.display = "none"; sendMessage(); };
-    btn.onclick = function(e) { inputEl.value = btn.innerText; sugg.style.display = "none"; sendMessage(); };
+    btn.ontouchend = function(ev) { ev.preventDefault(); inputEl.value = btn.innerText; sugg.style.display = "none"; sendMessage(); };
+    btn.onclick = function() { inputEl.value = btn.innerText; sugg.style.display = "none"; sendMessage(); };
     sugg.appendChild(btn);
   });
 }
@@ -244,27 +295,28 @@ function loadHistory() {
         scrollBottom();
         return;
       }
-    } catch(e) { messages = []; }
+    } catch(ex) { messages = []; }
   }
   setTimeout(function() {
-    renderMessage("bot", T[currentLang].welcome.replace(/\\n/g, "\n"));
+    var w = T[currentLang].welcome;
+    renderMessage("bot", w.replace(/\n/g, "
+"));
   }, 300);
 }
 
-function saveHistory() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
-}
+function saveHistory() { localStorage.setItem(STORAGE_KEY, JSON.stringify(messages)); }
 
-document.getElementById("clearBtn").addEventListener("click", function() {
-  if (!confirm(T[currentLang].clearConfirm)) return;
+function clearHistory() {
+  var t = T[currentLang];
+  if (!confirm(t.clearConfirm)) return;
   messages = [];
   localStorage.removeItem(STORAGE_KEY);
   document.getElementById("chat").innerHTML = "";
   document.getElementById("suggestions").style.display = "flex";
-  setTimeout(function() {
-    renderMessage("bot", T[currentLang].welcomeBack);
-  }, 200);
-});
+  setTimeout(function() { renderMessage("bot", t.welcomeBack); }, 200);
+}
+
+document.getElementById("clearBtn").addEventListener("click", clearHistory);
 
 function renderMessage(role, text) {
   var wrap = document.createElement("div");
@@ -282,12 +334,9 @@ function renderMessage(role, text) {
 }
 
 function addTyping() {
-  var wrap = document.createElement("div");
-  wrap.className = "msg bot"; wrap.id = "typing-indicator";
-  var sender = document.createElement("div");
-  sender.className = "sender"; sender.textContent = T[currentLang].sender;
-  var bubble = document.createElement("div");
-  bubble.className = "bubble typing";
+  var wrap = document.createElement("div"); wrap.className = "msg bot"; wrap.id = "typing-indicator";
+  var sender = document.createElement("div"); sender.className = "sender"; sender.textContent = T[currentLang].sender;
+  var bubble = document.createElement("div"); bubble.className = "bubble typing";
   bubble.innerHTML = "<span></span><span></span><span></span>";
   wrap.appendChild(sender); wrap.appendChild(bubble);
   document.getElementById("chat").appendChild(wrap);
@@ -297,10 +346,8 @@ function addTyping() {
 function removeTyping() { var t = document.getElementById("typing-indicator"); if (t) t.remove(); }
 
 function showError(msg) {
-  var el = document.createElement("div");
-  el.className = "error-banner"; el.textContent = msg;
-  document.getElementById("chat").appendChild(el);
-  scrollBottom();
+  var el = document.createElement("div"); el.className = "error-banner"; el.textContent = msg;
+  document.getElementById("chat").appendChild(el); scrollBottom();
 }
 
 function scrollBottom() { var c = document.getElementById("chat"); c.scrollTop = c.scrollHeight; }
@@ -317,56 +364,36 @@ inputEl.addEventListener("keydown", function(e) {
   if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); }
 });
 
-function handleSend(e) {
-  e.preventDefault();
-  e.stopPropagation();
-  sendMessage();
-}
+function handleSend(e) { e.preventDefault(); e.stopPropagation(); sendMessage(); }
 
 function sendMessage() {
   var text = inputEl.value.trim();
   if (!text) return;
-  inputEl.value = "";
-  inputEl.style.height = "auto";
-  sendBtn.disabled = true;
+  inputEl.value = ""; inputEl.style.height = "auto"; sendBtn.disabled = true;
   document.getElementById("suggestions").style.display = "none";
   renderMessage("user", text);
   messages.push({ role: "user", content: text });
-  saveHistory();
-  addTyping();
+  saveHistory(); addTyping();
   fetch("/api/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ messages: messages, lang: currentLang })
   })
   .then(function(r) { return r.json().then(function(d) { return { ok: r.ok, data: d }; }); })
-  .then(function(result) {
+  .then(function(res) {
     removeTyping();
-    if (!result.ok) {
-      showError("Fehler: " + (result.data.error || "unbekannt"));
-      messages.pop();
-    } else {
-      var reply = result.data.reply || "";
-      messages.push({ role: "assistant", content: reply });
-      saveHistory();
-      renderMessage("bot", reply);
-    }
-    sendBtn.disabled = false;
-    inputEl.focus();
+    if (!res.ok) { showError(T[currentLang].error + (res.data.error || "?")); messages.pop(); }
+    else { var reply = res.data.reply || ""; messages.push({ role: "assistant", content: reply }); saveHistory(); renderMessage("bot", reply); }
+    sendBtn.disabled = false; inputEl.focus();
   })
   .catch(function(err) {
-    removeTyping();
-    showError(T[currentLang].error + err.message);
-    messages.pop();
-    sendBtn.disabled = false;
-    inputEl.focus();
+    removeTyping(); showError(T[currentLang].error + err.message); messages.pop();
+    sendBtn.disabled = false; inputEl.focus();
   });
 }
 
 var savedLang = localStorage.getItem(LANG_KEY);
-if (savedLang && T[savedLang]) {
-  setLang(savedLang, null);
-}
+if (savedLang && T[savedLang]) { setLang(savedLang, null); }
 </script>
 </body>
 </html>
