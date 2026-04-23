@@ -45,7 +45,7 @@
     header h1 em { font-style:italic; color:var(--accent-dark); }
     .subtitle { margin-top:6px; font-size:12px; color:var(--text-muted); font-weight:300; line-height:1.6; max-width:560px; margin-left:auto; margin-right:auto; padding:0 44px; }
     .chat-wrapper { width:100%; max-width:760px; flex:1; display:flex; flex-direction:column; padding:0 16px; }
-    #chat { flex:1; overflow-y:auto; padding:16px 0 8px; display:flex; flex-direction:column; gap:14px; min-height:200px; max-height:calc(100vh - 400px); }
+    #chat { flex:1; overflow-y:auto; padding:10px 0 6px; display:flex; flex-direction:column; gap:12px; min-height:150px; max-height:calc(100vh - 320px); }
     #chat::-webkit-scrollbar { width:4px; }
     #chat::-webkit-scrollbar-thumb { background:var(--border); border-radius:4px; }
     .msg { display:flex; flex-direction:column; max-width:85%; animation:fadeUp 0.3s ease; }
@@ -62,7 +62,7 @@
     .suggestions { padding:8px 0; display:flex; flex-wrap:wrap; gap:7px; }
     .suggestion-btn { background:white; border:1px solid var(--border); color:var(--accent-dark); font-family:'Jost',sans-serif; font-size:12px; font-weight:400; padding:7px 12px; border-radius:30px; cursor:pointer; transition:all 0.2s; box-shadow:var(--shadow); touch-action:manipulation; }
     .suggestion-btn:hover { background:var(--accent-soft); border-color:var(--accent); }
-    .input-area { padding:10px 0 8px; border-top:1px solid var(--border); }
+    .input-area { padding:8px 0 6px; border-top:1px solid var(--border); }
     .input-row { display:flex; gap:10px; align-items:flex-end; }
     #userInput { flex:1; background:white; border:1px solid var(--border); border-radius:14px; color:var(--text); font-family:'Jost',sans-serif; font-size:15px; font-weight:300; padding:12px 16px; resize:none; min-height:48px; max-height:120px; outline:none; transition:border-color 0.2s; line-height:1.5; box-shadow:var(--shadow); }
     #userInput::placeholder { color:#aab0a0; }
@@ -71,7 +71,7 @@
     #sendBtn:hover { background:var(--accent-dark); }
     #sendBtn:disabled { opacity:0.4; cursor:not-allowed; }
     #sendBtn svg { width:20px; height:20px; fill:white; pointer-events:none; }
-    .app-footer { width:100%; max-width:760px; border-top:1px solid var(--border); padding:10px 16px 16px; display:flex; flex-direction:column; align-items:center; gap:6px; }
+    .app-footer { width:100%; max-width:760px; border-top:1px solid var(--border); padding:8px 16px 12px; display:flex; flex-direction:column; align-items:center; gap:5px; }
     .footer-support { font-size:14px; color:#c17a50; font-weight:400; text-align:center; letter-spacing:0.2px; }
     .footer-support a { color:#a85e30; text-decoration:none; border-bottom:1px solid rgba(193,122,80,0.3); font-weight:500; }
     .footer-support a:hover { color:#8a4a20; }
@@ -79,6 +79,8 @@
     .danke-btn:hover { background:var(--accent); color:white; border-color:var(--accent); }
     .footer-clear { background:none; border:none; color:#ccc; font-family:'Jost',sans-serif; font-size:11px; cursor:pointer; padding:2px 8px; touch-action:manipulation; }
     .footer-clear:hover { color:#c05050; }
+    .share-btn { background:none; border:1px solid var(--border); color:var(--text-muted); font-family:'Jost',sans-serif; font-size:12px; font-weight:300; padding:6px 16px; border-radius:20px; cursor:pointer; touch-action:manipulation; transition:all 0.2s; }
+    .share-btn:hover { border-color:var(--accent); color:var(--accent-dark); }
     .error-banner { background:#fdf0f0; border:1px solid #f0c0c0; color:#c05050; border-radius:12px; padding:10px 14px; font-size:13px; margin-top:8px; }
     @media(max-width:480px){header{padding:18px 14px 12px} .subtitle{padding:0 44px} .chat-wrapper{padding:0 10px} .msg{max-width:93%} .bubble{font-size:14px}}
   </style>
@@ -138,6 +140,7 @@
   <div class="app-footer">
     <div class="footer-support">Meine kleine Unterst&uuml;tzung f&uuml;r <a href="https://ich-sag-ja-zu-mir.de" target="_blank" rel="noopener">ich-sag-JA-zu-mir.de</a></div>
     <button class="danke-btn" id="dankeBtn" ontouchend="openDonate(event)" onclick="openDonate(event)">Danke</button>
+    <button class="share-btn" id="shareBtn" ontouchend="shareApp(event)" onclick="shareApp(event)">&#128279; App teilen</button>
     <button class="footer-clear" id="clearBtn">&#128465; Verlauf l&ouml;schen</button>
   </div>
 </div>
@@ -332,6 +335,33 @@ function sendMessage() {
     removeTyping(); showError(T[currentLang].error + err.message); messages.pop();
     sendBtn.disabled = false; inputEl.focus();
   });
+}
+
+
+function shareApp(e) {
+  if (e) { e.preventDefault(); e.stopPropagation(); }
+  var shareText = {
+    de: "Vielleicht kennst du jemanden, dem diese App gerade eine Unterstuetzung sein koennte.",
+    en: "Maybe you know someone who could benefit from this app right now.",
+    es: "Quizas conoces a alguien a quien esta app le podria ayudar ahora.",
+    fr: "Peut-etre connaissez-vous quelqu'un a qui cette app pourrait etre utile."
+  };
+  var url = window.location.href.split("?")[0];
+  if (navigator.share) {
+    navigator.share({
+      title: "Der Raum - Dein Moment, Dein Raum",
+      text: shareText[currentLang] || shareText.de,
+      url: url
+    }).catch(function() {});
+  } else {
+    var dummy = document.createElement("input");
+    document.body.appendChild(dummy);
+    dummy.value = url;
+    dummy.select();
+    document.execCommand("copy");
+    document.body.removeChild(dummy);
+    alert("Link kopiert!");
+  }
 }
 
 var savedLang = localStorage.getItem(LANG_KEY);
