@@ -175,13 +175,22 @@ var T = {
 
 function setLang(lang, e) {
   if (e) { e.preventDefault(); e.stopPropagation(); }
+  var prevLang = currentLang;
   currentLang = lang;
   localStorage.setItem(LANG_KEY, lang);
   document.getElementById("langScreen").classList.add("hidden");
   document.getElementById("langBackBtn").style.display = "block";
   document.getElementById("app").style.display = "flex";
   applyTranslations();
-  if (messages.length === 0) { loadHistory(); }
+  if (messages.length === 0) {
+    loadHistory();
+  } else if (prevLang !== lang) {
+    var chat = document.getElementById("chat");
+    var firstMsg = chat.querySelector(".msg.bot .bubble");
+    if (firstMsg) { firstMsg.textContent = WELCOME[lang]; }
+  } else {
+    loadHistory();
+  }
 }
 
 function openLangScreen(e) {
