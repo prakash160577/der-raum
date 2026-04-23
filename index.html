@@ -72,9 +72,9 @@
     #sendBtn:disabled { opacity:0.4; cursor:not-allowed; }
     #sendBtn svg { width:20px; height:20px; fill:white; pointer-events:none; }
     .app-footer { width:100%; max-width:760px; border-top:1px solid var(--border); padding:10px 16px 16px; display:flex; flex-direction:column; align-items:center; gap:6px; }
-    .footer-support { font-size:12px; color:var(--text-muted); font-weight:300; text-align:center; }
-    .footer-support a { color:var(--accent-dark); text-decoration:none; border-bottom:1px solid var(--border); }
-    .footer-support a:hover { color:var(--accent); }
+    .footer-support { font-size:14px; color:#c17a50; font-weight:400; text-align:center; letter-spacing:0.2px; }
+    .footer-support a { color:#a85e30; text-decoration:none; border-bottom:1px solid rgba(193,122,80,0.3); font-weight:500; }
+    .footer-support a:hover { color:#8a4a20; }
     .danke-btn { background:var(--accent-soft); border:1px solid var(--border); color:var(--accent-dark); font-family:'Jost',sans-serif; font-size:13px; font-weight:400; padding:8px 24px; border-radius:30px; cursor:pointer; display:inline-block; transition:all 0.2s; touch-action:manipulation; }
     .danke-btn:hover { background:var(--accent); color:white; border-color:var(--accent); }
     .footer-clear { background:none; border:none; color:#ccc; font-family:'Jost',sans-serif; font-size:11px; cursor:pointer; padding:2px 8px; touch-action:manipulation; }
@@ -164,10 +164,10 @@ var WELCOME_BACK = {
 };
 
 var T = {
-  de: { eyebrow:"Buchreihe", subtitle:"Dein pers&#246;nlicher Begleiter durch: &#8222;Du entscheidest&#8220;, &#8222;Schmerz endet, Leiden ist eine Wahl&#8220; und &#8222;Stille&#8220;", placeholder:"Schreib deine Frage ...", suggestions:["Was ist der Raum?","Bewusster reagieren","Leiden ist eine Wahl?","Innere Stille finden"], sender:"Der Raum", danke:"Danke", freeBtn:"Frei w&#228;hlbar", backBtn:"&#8592; Zur&#252;ck", clear:"&#128465; Verlauf l&#246;schen", clearConfirm:"Gespr&#228;chsverlauf wirklich l&#246;schen?", error:"Fehler: " },
-  en: { eyebrow:"Book Series", subtitle:"Your personal companion through: &#8220;You Decide&#8221;, &#8220;Pain Ends, Suffering is a Choice&#8221; and &#8220;Silence&#8221;", placeholder:"Write your question ...", suggestions:["What is the space?","React consciously","Suffering is a choice?","Finding inner silence"], sender:"The Space", danke:"Thank you", freeBtn:"Free amount", backBtn:"&#8592; Back", clear:"&#128465; Delete history", clearConfirm:"Really delete conversation history?", error:"Error: " },
-  es: { eyebrow:"Serie de Libros", subtitle:"Tu acompa&#241;ante personal: &#8220;T&#250; decides&#8221;, &#8220;El dolor termina, el sufrimiento es una elecci&#243;n&#8221; y &#8220;Silencio&#8221;", placeholder:"Escribe tu pregunta ...", suggestions:["Que es el espacio?","Reaccionar conscientemente","Sufrir es una eleccion?","Silencio interior"], sender:"El Espacio", danke:"Gracias", freeBtn:"Libre", backBtn:"&#8592; Volver", clear:"&#128465; Borrar historial", clearConfirm:"Realmente borrar el historial?", error:"Error: " },
-  fr: { eyebrow:"Collection de Livres", subtitle:"Votre compagnon personnel: &#171;Tu d&#233;cides&#187;, &#171;La douleur se termine, la souffrance est un choix&#187; et &#171;Silence&#187;", placeholder:"Ecrivez votre question ...", suggestions:["Qu'est-ce que l'espace?","Reagir consciemment","Souffrir est un choix?","Silence interieur"], sender:"L'Espace", danke:"Merci", freeBtn:"Libre", backBtn:"&#8592; Retour", clear:"&#128465; Supprimer l'historique", clearConfirm:"Vraiment supprimer l'historique?", error:"Erreur: " }
+  de: { eyebrow:"Buchreihe", subtitle:"Dein pers&#246;nlicher Begleiter durch die Buchreihe", placeholder:"Schreib deine Frage ...", suggestions:["Was ist der Raum?","Bewusster reagieren","Leiden ist eine Wahl?","Innere Stille finden"], sender:"Der Raum", danke:"Danke", freeBtn:"Frei w&#228;hlbar", backBtn:"&#8592; Zur&#252;ck", clear:"&#128465; Verlauf l&#246;schen", clearConfirm:"Gespr&#228;chsverlauf wirklich l&#246;schen?", error:"Fehler: " },
+  en: { eyebrow:"Book Series", subtitle:"Your personal companion through the book series", placeholder:"Write your question ...", suggestions:["What is the space?","React consciously","Suffering is a choice?","Finding inner silence"], sender:"The Space", danke:"Thank you", freeBtn:"Free amount", backBtn:"&#8592; Back", clear:"&#128465; Delete history", clearConfirm:"Really delete conversation history?", error:"Error: " },
+  es: { eyebrow:"Serie de Libros", subtitle:"Tu acompa&#241;ante personal a trav&#233;s de la serie de libros", placeholder:"Escribe tu pregunta ...", suggestions:["Que es el espacio?","Reaccionar conscientemente","Sufrir es una eleccion?","Silencio interior"], sender:"El Espacio", danke:"Gracias", freeBtn:"Libre", backBtn:"&#8592; Volver", clear:"&#128465; Borrar historial", clearConfirm:"Realmente borrar el historial?", error:"Error: " },
+  fr: { eyebrow:"Collection de Livres", subtitle:"Votre compagnon personnel &#224; travers la collection de livres", placeholder:"Ecrivez votre question ...", suggestions:["Qu'est-ce que l'espace?","Reagir consciemment","Souffrir est un choix?","Silence interieur"], sender:"L'Espace", danke:"Merci", freeBtn:"Libre", backBtn:"&#8592; Retour", clear:"&#128465; Supprimer l'historique", clearConfirm:"Vraiment supprimer l'historique?", error:"Erreur: " }
 };
 
 function setLang(lang, e) {
