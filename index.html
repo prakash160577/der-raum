@@ -15,8 +15,6 @@
     :root { --bg:#f5f2ec; --border:rgba(110,140,110,0.25); --accent:#6e8c6e; --accent-dark:#4f6b4f; --accent-soft:rgba(110,140,110,0.1); --text:#2e3028; --text-muted:#7a8070; --user-bubble:#dde8dd; --bot-bubble:#ffffff; --radius:18px; --shadow:0 2px 12px rgba(80,100,80,0.08); }
     * { box-sizing:border-box; margin:0; padding:0; }
     body { font-family:'Jost',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; display:flex; flex-direction:column; align-items:center; }
-
-    /* LANGUAGE SCREEN */
     #langScreen { position:fixed; inset:0; background:var(--bg); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:200; padding:32px; text-align:center; }
     #langScreen.hidden { display:none; }
     #langScreen img { width:110px; margin-bottom:20px; border-radius:20px; box-shadow:var(--shadow); }
@@ -27,22 +25,17 @@
     .lang-btn { background:white; border:1px solid var(--border); color:var(--text); font-family:'Jost',sans-serif; font-size:15px; font-weight:400; padding:14px; border-radius:14px; cursor:pointer; box-shadow:var(--shadow); transition:all 0.2s; touch-action:manipulation; }
     .lang-btn:hover { background:var(--accent-soft); border-color:var(--accent); }
     #langBackBtn { margin-top:20px; background:none; border:none; color:var(--text-muted); font-family:'Jost',sans-serif; font-size:13px; cursor:pointer; padding:8px 16px; touch-action:manipulation; display:none; }
-
-    /* DONATE SCREEN */
     #donateScreen { position:fixed; inset:0; background:var(--bg); display:none; flex-direction:column; align-items:center; justify-content:center; z-index:150; padding:32px; text-align:center; }
     #donateScreen.active { display:flex; }
     #donateScreen img { width:90px; margin-bottom:16px; border-radius:18px; box-shadow:var(--shadow); }
-    #donateScreen h2 { font-family:'Cormorant Garamond',serif; font-weight:300; font-size:22px; margin-bottom:10px; }
-    #donateScreen h2 em { font-style:italic; color:var(--accent-dark); }
-    .donate-thanks { font-size:13px; color:var(--text-muted); margin-bottom:4px; font-weight:300; line-height:1.7; max-width:300px; }
+    #donateScreen h2 { font-family:'Cormorant Garamond',serif; font-weight:300; font-size:22px; margin-bottom:10px; font-style:italic; color:var(--accent-dark); }
+    .donate-thanks { font-size:13px; color:var(--text-muted); margin-bottom:4px; font-weight:300; line-height:1.9; max-width:300px; }
     .donate-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; width:100%; max-width:300px; margin:16px 0 10px; }
     .donate-amt { background:white; border:1px solid var(--border); color:var(--accent-dark); font-family:'Jost',sans-serif; font-size:18px; font-weight:400; padding:16px; border-radius:14px; cursor:pointer; box-shadow:var(--shadow); transition:all 0.2s; text-decoration:none; display:block; touch-action:manipulation; }
     .donate-amt:hover { background:var(--accent); color:white; border-color:var(--accent); }
     .donate-free { background:var(--accent-soft); border:1px solid var(--border); color:var(--accent-dark); font-family:'Jost',sans-serif; font-size:14px; font-weight:400; padding:12px 24px; border-radius:14px; cursor:pointer; box-shadow:var(--shadow); transition:all 0.2s; text-decoration:none; display:inline-block; touch-action:manipulation; }
     .donate-free:hover { background:var(--accent); color:white; border-color:var(--accent); }
     .donate-back { margin-top:16px; background:none; border:none; color:var(--text-muted); font-family:'Jost',sans-serif; font-size:13px; cursor:pointer; padding:8px 16px; touch-action:manipulation; }
-
-    /* APP */
     #app { display:none; width:100%; flex-direction:column; align-items:center; min-height:100vh; }
     header { width:100%; max-width:760px; padding:20px 20px 12px; text-align:center; border-bottom:1px solid var(--border); position:relative; }
     .lang-switch { position:absolute; top:16px; right:14px; background:none; border:1px solid var(--border); border-radius:20px; padding:5px 10px; font-size:13px; cursor:pointer; color:var(--text-muted); touch-action:manipulation; transition:all 0.2s; }
@@ -51,8 +44,6 @@
     header h1 { font-family:'Cormorant Garamond',serif; font-weight:300; font-size:clamp(20px,5vw,32px); }
     header h1 em { font-style:italic; color:var(--accent-dark); }
     .subtitle { margin-top:6px; font-size:12px; color:var(--text-muted); font-weight:300; line-height:1.6; max-width:560px; margin-left:auto; margin-right:auto; padding:0 44px; }
-
-    /* CHAT */
     .chat-wrapper { width:100%; max-width:760px; flex:1; display:flex; flex-direction:column; padding:0 16px; }
     #chat { flex:1; overflow-y:auto; padding:16px 0 8px; display:flex; flex-direction:column; gap:14px; min-height:200px; max-height:calc(100vh - 400px); }
     #chat::-webkit-scrollbar { width:4px; }
@@ -80,11 +71,9 @@
     #sendBtn:hover { background:var(--accent-dark); }
     #sendBtn:disabled { opacity:0.4; cursor:not-allowed; }
     #sendBtn svg { width:20px; height:20px; fill:white; pointer-events:none; }
-
-    /* FOOTER */
     .app-footer { width:100%; max-width:760px; border-top:1px solid var(--border); padding:10px 16px 16px; display:flex; flex-direction:column; align-items:center; gap:6px; }
     .footer-support { font-size:12px; color:var(--text-muted); font-weight:300; text-align:center; }
-    .footer-support a { color:var(--accent-dark); text-decoration:none; border-bottom:1px solid var(--border); transition:color 0.2s; }
+    .footer-support a { color:var(--accent-dark); text-decoration:none; border-bottom:1px solid var(--border); }
     .footer-support a:hover { color:var(--accent); }
     .danke-btn { background:var(--accent-soft); border:1px solid var(--border); color:var(--accent-dark); font-family:'Jost',sans-serif; font-size:13px; font-weight:400; padding:8px 24px; border-radius:30px; cursor:pointer; display:inline-block; transition:all 0.2s; touch-action:manipulation; }
     .danke-btn:hover { background:var(--accent); color:white; border-color:var(--accent); }
@@ -96,7 +85,6 @@
 </head>
 <body>
 
-<!-- LANGUAGE SCREEN -->
 <div id="langScreen">
   <img src="/icon-512.png" alt="Der Raum" />
   <h2>Dein Moment &ndash;<br><em>Dein Raum</em></h2>
@@ -110,26 +98,24 @@
   <button id="langBackBtn" ontouchend="closeLangScreen(event)" onclick="closeLangScreen(event)">&#8592; Zur&uuml;ck</button>
 </div>
 
-<!-- DONATE SCREEN -->
 <div id="donateScreen">
   <img src="/icon-512.png" alt="Ich sag JA" />
-  <h2><em id="donateTitleDE">Vielen Dank</em></h2>
+  <h2>Vielen Dank &ndash; Thank you &ndash; Gracias &ndash; Merci</h2>
   <div class="donate-thanks">
-    <div>&#127465;&#127466; Vielen Dank f&uuml;r deine Unterst&uuml;tzung!</div>
-    <div>&#127468;&#127463; Thank you so much for your support!</div>
-    <div>&#127466;&#127480; &iexcl;Muchas gracias por tu apoyo!</div>
-    <div>&#127467;&#127479; Merci beaucoup pour votre soutien!</div>
+    &#127465;&#127466; Vielen Dank f&uuml;r deine Unterst&uuml;tzung!<br>
+    &#127468;&#127463; Thank you so much for your support!<br>
+    &#127466;&#127480; &iexcl;Muchas gracias por tu apoyo!<br>
+    &#127467;&#127479; Merci beaucoup pour votre soutien!
   </div>
   <div class="donate-grid">
     <a class="donate-amt" href="https://paypal.me/IchsagJA/5" target="_blank" rel="noopener">5 &euro;</a>
     <a class="donate-amt" href="https://paypal.me/IchsagJA/10" target="_blank" rel="noopener">10 &euro;</a>
     <a class="donate-amt" href="https://paypal.me/IchsagJA/20" target="_blank" rel="noopener">20 &euro;</a>
-    <a class="donate-free" href="https://paypal.me/IchsagJA" target="_blank" rel="noopener" id="donateFreeBtn">Frei</a>
+    <a class="donate-free" href="https://paypal.me/IchsagJA" target="_blank" rel="noopener" id="donateFreeBtn">Frei w&auml;hlbar</a>
   </div>
   <button class="donate-back" id="donateBackBtn" ontouchend="closeDonate(event)" onclick="closeDonate(event)">&#8592; Zur&uuml;ck</button>
 </div>
 
-<!-- MAIN APP -->
 <div id="app">
   <header>
     <button class="lang-switch" id="langSwitchBtn" ontouchend="openLangScreen(event)" onclick="openLangScreen(event)">&#127758;</button>
@@ -137,7 +123,6 @@
     <h1>Dein Moment &ndash; <em>Dein Raum</em></h1>
     <div class="subtitle" id="hSubtitle"></div>
   </header>
-
   <div class="chat-wrapper">
     <div id="chat"></div>
     <div class="suggestions" id="suggestions"></div>
@@ -150,11 +135,10 @@
       </div>
     </div>
   </div>
-
   <div class="app-footer">
     <div class="footer-support">Meine kleine Unterst&uuml;tzung f&uuml;r <a href="https://ich-sag-ja-zu-mir.de" target="_blank" rel="noopener">ich-sag-JA-zu-mir.de</a></div>
     <button class="danke-btn" id="dankeBtn" ontouchend="openDonate(event)" onclick="openDonate(event)">Danke</button>
-    <button class="footer-clear" id="clearBtn" onclick="clearHistory()">&#128465; Verlauf l&ouml;schen</button>
+    <button class="footer-clear" id="clearBtn">&#128465; Verlauf l&ouml;schen</button>
   </div>
 </div>
 
@@ -163,68 +147,27 @@ var STORAGE_KEY = "derRaum_v3";
 var LANG_KEY = "derRaum_lang";
 var messages = [];
 var currentLang = "de";
+var NL = String.fromCharCode(10);
+
+var WELCOME = {
+  de: "Willkommen im Raum." + NL + NL + "Ich begleite dich durch die Buecher. Was bewegt dich gerade?",
+  en: "Welcome to the Space." + NL + NL + "I accompany you through the books. What is on your mind?",
+  es: "Bienvenido al Espacio." + NL + NL + "Te acompano a traves de los libros. Que te mueve ahora?",
+  fr: "Bienvenue dans l'Espace." + NL + NL + "Qu'est-ce qui vous anime?"
+};
+
+var WELCOME_BACK = {
+  de: "Willkommen zurueck. Was bewegt dich gerade?",
+  en: "Welcome back. What is on your mind?",
+  es: "Bienvenido de nuevo. Que te mueve?",
+  fr: "Bienvenue. Qu'est-ce qui vous anime?"
+};
 
 var T = {
-  de: {
-    eyebrow: "Buchreihe",
-    subtitle: "Dein pers&#246;nlicher Begleiter durch: &bdquo;Du entscheidest&ldquo;, &bdquo;Schmerz endet, Leiden ist eine Wahl&ldquo; und &bdquo;Stille&ldquo;",
-    welcome: "Willkommen im Raum.\n\nIch begleite dich durch die Buecher. Was bewegt dich gerade?",
-    placeholder: "Schreib deine Frage ...",
-    suggestions: ["Was ist der Raum?", "Bewusster reagieren", "Leiden ist eine Wahl?", "Innere Stille finden"],
-    sender: "Der Raum",
-    danke: "Danke",
-    freeBtn: "Frei w&#228;hlbar",
-    backBtn: "&#8592; Zur&#252;ck",
-    clear: "&#128465; Verlauf l&#246;schen",
-    clearConfirm: "Gespr&#228;chsverlauf wirklich l&#246;schen?",
-    welcomeBack: "Willkommen zur&#252;ck. Was bewegt dich gerade?",
-    error: "Fehler: "
-  },
-  en: {
-    eyebrow: "Book Series",
-    subtitle: "Your personal companion through: &#8220;You Decide&#8221;, &#8220;Pain Ends, Suffering is a Choice&#8221; and &#8220;Silence&#8221;",
-    welcome: "Welcome to the Space.\n\nI accompany you through the books. What is on your mind?",
-    placeholder: "Write your question ...",
-    suggestions: ["What is the space?", "React consciously", "Suffering is a choice?", "Finding inner silence"],
-    sender: "The Space",
-    danke: "Thank you",
-    freeBtn: "Free amount",
-    backBtn: "&#8592; Back",
-    clear: "&#128465; Delete history",
-    clearConfirm: "Really delete conversation history?",
-    welcomeBack: "Welcome back. What is on your mind?",
-    error: "Error: "
-  },
-  es: {
-    eyebrow: "Serie de Libros",
-    subtitle: "Tu acompa&#241;ante personal: &#8220;T&#250; decides&#8221;, &#8220;El dolor termina, el sufrimiento es una elecci&#243;n&#8221; y &#8220;Silencio&#8221;",
-    welcome: "Bienvenido al Espacio.\n\n&#191;Qu&#233; te mueve ahora?",
-    placeholder: "Escribe tu pregunta ...",
-    suggestions: ["&#191;Qu&#233; es el espacio?", "Reaccionar conscientemente", "&#191;Sufrir es una elecci&#243;n?", "Silencio interior"],
-    sender: "El Espacio",
-    danke: "Gracias",
-    freeBtn: "Libre",
-    backBtn: "&#8592; Volver",
-    clear: "&#128465; Borrar historial",
-    clearConfirm: "&#191;Realmente borrar el historial?",
-    welcomeBack: "Bienvenido de nuevo. &#191;Qu&#233; te mueve?",
-    error: "Error: "
-  },
-  fr: {
-    eyebrow: "Collection de Livres",
-    subtitle: "Votre compagnon personnel: &#171;Tu d&#233;cides&#187;, &#171;La douleur se termine, la souffrance est un choix&#187; et &#171;Silence&#187;",
-    welcome: "Bienvenue dans l'Espace.\n\nQu'est-ce qui vous anime?",
-    placeholder: "&#201;crivez votre question ...",
-    suggestions: ["Qu'est-ce que l'espace?", "R&#233;agir consciemment", "Souffrir est un choix?", "Silence int&#233;rieur"],
-    sender: "L'Espace",
-    danke: "Merci",
-    freeBtn: "Libre",
-    backBtn: "&#8592; Retour",
-    clear: "&#128465; Supprimer l'historique",
-    clearConfirm: "Vraiment supprimer l'historique?",
-    welcomeBack: "Bienvenue. Qu'est-ce qui vous anime?",
-    error: "Erreur: "
-  }
+  de: { eyebrow:"Buchreihe", subtitle:"Dein pers&#246;nlicher Begleiter durch: &#8222;Du entscheidest&#8220;, &#8222;Schmerz endet, Leiden ist eine Wahl&#8220; und &#8222;Stille&#8220;", placeholder:"Schreib deine Frage ...", suggestions:["Was ist der Raum?","Bewusster reagieren","Leiden ist eine Wahl?","Innere Stille finden"], sender:"Der Raum", danke:"Danke", freeBtn:"Frei w&#228;hlbar", backBtn:"&#8592; Zur&#252;ck", clear:"&#128465; Verlauf l&#246;schen", clearConfirm:"Gespr&#228;chsverlauf wirklich l&#246;schen?", error:"Fehler: " },
+  en: { eyebrow:"Book Series", subtitle:"Your personal companion through: &#8220;You Decide&#8221;, &#8220;Pain Ends, Suffering is a Choice&#8221; and &#8220;Silence&#8221;", placeholder:"Write your question ...", suggestions:["What is the space?","React consciously","Suffering is a choice?","Finding inner silence"], sender:"The Space", danke:"Thank you", freeBtn:"Free amount", backBtn:"&#8592; Back", clear:"&#128465; Delete history", clearConfirm:"Really delete conversation history?", error:"Error: " },
+  es: { eyebrow:"Serie de Libros", subtitle:"Tu acompa&#241;ante personal: &#8220;T&#250; decides&#8221;, &#8220;El dolor termina, el sufrimiento es una elecci&#243;n&#8221; y &#8220;Silencio&#8221;", placeholder:"Escribe tu pregunta ...", suggestions:["Que es el espacio?","Reaccionar conscientemente","Sufrir es una eleccion?","Silencio interior"], sender:"El Espacio", danke:"Gracias", freeBtn:"Libre", backBtn:"&#8592; Volver", clear:"&#128465; Borrar historial", clearConfirm:"Realmente borrar el historial?", error:"Error: " },
+  fr: { eyebrow:"Collection de Livres", subtitle:"Votre compagnon personnel: &#171;Tu d&#233;cides&#187;, &#171;La douleur se termine, la souffrance est un choix&#187; et &#171;Silence&#187;", placeholder:"Ecrivez votre question ...", suggestions:["Qu'est-ce que l'espace?","Reagir consciemment","Souffrir est un choix?","Silence interieur"], sender:"L'Espace", danke:"Merci", freeBtn:"Libre", backBtn:"&#8592; Retour", clear:"&#128465; Supprimer l'historique", clearConfirm:"Vraiment supprimer l'historique?", error:"Erreur: " }
 };
 
 function setLang(lang, e) {
@@ -233,8 +176,7 @@ function setLang(lang, e) {
   localStorage.setItem(LANG_KEY, lang);
   document.getElementById("langScreen").classList.add("hidden");
   document.getElementById("langBackBtn").style.display = "block";
-  var app = document.getElementById("app");
-  app.style.display = "flex";
+  document.getElementById("app").style.display = "flex";
   applyTranslations();
   if (messages.length === 0) { loadHistory(); }
 }
@@ -253,7 +195,7 @@ function closeLangScreen(e) {
 function openDonate(e) {
   if (e) { e.preventDefault(); e.stopPropagation(); }
   var t = T[currentLang];
-  document.getElementById("donateFreeBtn").textContent = t.freeBtn;
+  document.getElementById("donateFreeBtn").innerHTML = t.freeBtn;
   document.getElementById("donateBackBtn").innerHTML = t.backBtn;
   document.getElementById("donateScreen").classList.add("active");
 }
@@ -298,13 +240,13 @@ function loadHistory() {
     } catch(ex) { messages = []; }
   }
   setTimeout(function() {
-    var w = T[currentLang].welcome;
-    renderMessage("bot", w.replace(/\n/g, "
-"));
+    renderMessage("bot", WELCOME[currentLang]);
   }, 300);
 }
 
-function saveHistory() { localStorage.setItem(STORAGE_KEY, JSON.stringify(messages)); }
+function saveHistory() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+}
 
 function clearHistory() {
   var t = T[currentLang];
@@ -313,7 +255,7 @@ function clearHistory() {
   localStorage.removeItem(STORAGE_KEY);
   document.getElementById("chat").innerHTML = "";
   document.getElementById("suggestions").style.display = "flex";
-  setTimeout(function() { renderMessage("bot", t.welcomeBack); }, 200);
+  setTimeout(function() { renderMessage("bot", WELCOME_BACK[currentLang]); }, 200);
 }
 
 document.getElementById("clearBtn").addEventListener("click", clearHistory);
