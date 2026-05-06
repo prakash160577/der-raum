@@ -390,24 +390,44 @@ function shareApp(e) {
 
 var recognition = null;
 var isRecording = false;
+var userStopped = false;
+var accumulatedTranscript = "";
 var LANG_CODES = { de: "de-DE", en: "en-US", es: "es-ES", fr: "fr-FR" };
 
 function initVoice() {
   var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SR) { document.getElementById("micBtn").style.display = "none"; return; }
   recognition = new SR();
-  recognition.continuous = false;
+  recognition.continuous = true;
   recognition.interimResults = false;
   recognition.onresult = function(e) {
-    var transcript = e.results[0][0].transcript;
-    inputEl.value = transcript;
-    inputEl.style.height = "auto";
-    inputEl.style.height = Math.min(inputEl.scrollHeight, 120) + "px";
-    stopRecording();
-    sendMessage();
+    for (var i = e.resultIndex; i < e.results.length; i++) {
+      if (e.results[i].isFinal) {
+        accumulatedTranscript += e.results[i][0].transcript + " ";
+      }
+    }
   };
-  recognition.onerror = function() { stopRecording(); };
-  recognition.onend = function() { stopRecording(); };
+  recognition.onerror = function() {
+    accumulatedTranscript = "";
+    userStopped = false;
+    isRecording = false;
+    var btn = document.getElementById("micBtn");
+    if (btn) btn.classList.remove("recording");
+  };
+  recognition.onend = function() {
+    isRecording = false;
+    var btn = document.getElementById("micBtn");
+    if (btn) btn.classList.remove("recording");
+    var transcript = accumulatedTranscript.trim();
+    accumulatedTranscript = "";
+    if (userStopped && transcript) {
+      inputEl.value = transcript;
+      inputEl.style.height = "auto";
+      inputEl.style.height = Math.min(inputEl.scrollHeight, 120) + "px";
+      sendMessage();
+    }
+    userStopped = false;
+  };
 }
 
 function toggleRecording(e) {
@@ -417,6 +437,8 @@ function toggleRecording(e) {
 
 function startRecording() {
   if (!recognition) return;
+  accumulatedTranscript = "";
+  userStopped = false;
   recognition.lang = LANG_CODES[currentLang] || "de-DE";
   try { recognition.start(); } catch(err) { return; }
   isRecording = true;
@@ -424,7 +446,10 @@ function startRecording() {
 }
 
 function stopRecording() {
-  if (recognition && isRecording) { try { recognition.stop(); } catch(err) {} }
+  if (recognition && isRecording) {
+    userStopped = true;
+    try { recognition.stop(); } catch(err) {}
+  }
   isRecording = false;
   var btn = document.getElementById("micBtn");
   if (btn) btn.classList.remove("recording");
