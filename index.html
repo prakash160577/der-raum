@@ -398,7 +398,7 @@ function initVoice() {
   var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SR) { document.getElementById("micBtn").style.display = "none"; return; }
   recognition = new SR();
-  recognition.continuous = true;
+  recognition.continuous = false;
   recognition.interimResults = false;
   recognition.onresult = function(e) {
     for (var i = e.resultIndex; i < e.results.length; i++) {
@@ -407,7 +407,8 @@ function initVoice() {
       }
     }
   };
-  recognition.onerror = function() {
+  recognition.onerror = function(e) {
+    if (e.error === "no-speech") return;
     accumulatedTranscript = "";
     userStopped = false;
     isRecording = false;
@@ -415,18 +416,26 @@ function initVoice() {
     if (btn) btn.classList.remove("recording");
   };
   recognition.onend = function() {
-    isRecording = false;
-    var btn = document.getElementById("micBtn");
-    if (btn) btn.classList.remove("recording");
-    var transcript = accumulatedTranscript.trim();
-    accumulatedTranscript = "";
-    if (userStopped && transcript) {
-      inputEl.value = transcript;
-      inputEl.style.height = "auto";
-      inputEl.style.height = Math.min(inputEl.scrollHeight, 120) + "px";
-      sendMessage();
+    if (userStopped) {
+      isRecording = false;
+      var btn = document.getElementById("micBtn");
+      if (btn) btn.classList.remove("recording");
+      var transcript = accumulatedTranscript.trim();
+      accumulatedTranscript = "";
+      userStopped = false;
+      if (transcript) {
+        inputEl.value = transcript;
+        inputEl.style.height = "auto";
+        inputEl.style.height = Math.min(inputEl.scrollHeight, 120) + "px";
+        sendMessage();
+      }
+    } else if (isRecording) {
+      try { recognition.start(); } catch(err) {
+        isRecording = false;
+        var btn = document.getElementById("micBtn");
+        if (btn) btn.classList.remove("recording");
+      }
     }
-    userStopped = false;
   };
 }
 
