@@ -218,7 +218,6 @@ function closeLangScreen(e) {
 function openDonate(e) {
   if (e) { e.preventDefault(); e.stopPropagation(); }
   var t = T[currentLang];
-  document.getElementById("donateFreeBtn").innerHTML = t.freeBtn;
   document.getElementById("donateBackBtn").innerHTML = t.backBtn;
   document.getElementById("donateScreen").classList.add("active");
 }
