@@ -48,7 +48,7 @@
     #chat { flex:1; overflow-y:auto; padding:10px 0 6px; display:flex; flex-direction:column; gap:12px; min-height:150px; max-height:calc(100vh - 320px); }
     #chat::-webkit-scrollbar { width:4px; }
     #chat::-webkit-scrollbar-thumb { background:var(--border); border-radius:4px; }
-    .msg { display:flex; flex-direction:column; max-width:85%; animation:fadeUp 0.3s ease; }
+    .msg { display:flex; flex-direction:column; max-width:85%; animation:fadeUp 0.3s ease; scroll-margin-top:10px; }
     @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
     .msg.user { align-self:flex-end; align-items:flex-end; }
     .msg.bot { align-self:flex-start; align-items:flex-start; }
@@ -82,6 +82,11 @@
     .share-btn { background:none; border:1px solid var(--border); color:var(--text-muted); font-family:'Jost',sans-serif; font-size:12px; font-weight:300; padding:6px 16px; border-radius:20px; cursor:pointer; touch-action:manipulation; transition:all 0.2s; }
     .share-btn:hover { border-color:var(--accent); color:var(--accent-dark); }
     .error-banner { background:#fdf0f0; border:1px solid #f0c0c0; color:#c05050; border-radius:12px; padding:10px 14px; font-size:13px; margin-top:8px; }
+    #micBtn { background:white; border:1px solid var(--border); border-radius:14px; width:48px; height:48px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:var(--shadow); touch-action:manipulation; -webkit-tap-highlight-color:transparent; user-select:none; transition:all 0.2s; }
+    #micBtn svg { width:22px; height:22px; fill:var(--accent); pointer-events:none; }
+    #micBtn.recording { background:var(--accent); border-color:var(--accent); animation:micPulse 1.2s infinite; }
+    #micBtn.recording svg { fill:white; }
+    @keyframes micPulse { 0%,100%{box-shadow:0 0 0 0 rgba(110,140,110,0.4)} 50%{box-shadow:0 0 0 8px rgba(110,140,110,0)} }
     @media(max-width:480px){header{padding:18px 14px 12px} .subtitle{padding:0 44px} .chat-wrapper{padding:0 10px} .msg{max-width:93%} .bubble{font-size:14px}}
   </style>
 </head>
@@ -131,6 +136,9 @@
     <div class="input-area">
       <div class="input-row">
         <textarea id="userInput" rows="1"></textarea>
+        <button id="micBtn" aria-label="Spracheingabe" ontouchend="toggleRecording(event)" onclick="toggleRecording(event)">
+          <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V5zm6 6c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
+        </button>
         <button id="sendBtn" aria-label="Senden" ontouchend="handleSend(event)" onclick="handleSend(event)">
           <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
         </button>
@@ -175,6 +183,7 @@ var T = {
 
 function setLang(lang, e) {
   if (e) { e.preventDefault(); e.stopPropagation(); }
+  stopRecording();
   var prevLang = currentLang;
   currentLang = lang;
   localStorage.setItem(LANG_KEY, lang);
@@ -244,7 +253,7 @@ function loadHistory() {
       if (messages.length > 0) {
         document.getElementById("suggestions").style.display = "none";
         for (var i = 0; i < messages.length; i++) {
-          renderMessage(messages[i].role === "user" ? "user" : "bot", messages[i].content);
+          renderMessage(messages[i].role === "user" ? "user" : "bot", messages[i].content, true);
         }
         scrollBottom();
         return;
@@ -272,7 +281,7 @@ function clearHistory() {
 
 document.getElementById("clearBtn").addEventListener("click", clearHistory);
 
-function renderMessage(role, text) {
+function renderMessage(role, text, noScroll) {
   var wrap = document.createElement("div");
   wrap.className = "msg " + role;
   var sender = document.createElement("div");
@@ -284,7 +293,13 @@ function renderMessage(role, text) {
   wrap.appendChild(sender);
   wrap.appendChild(bubble);
   document.getElementById("chat").appendChild(wrap);
-  scrollBottom();
+  if (!noScroll) {
+    if (role === "bot") {
+      setTimeout(function() { wrap.scrollIntoView({ behavior: "smooth", block: "start" }); }, 50);
+    } else {
+      scrollBottom();
+    }
+  }
 }
 
 function addTyping() {
@@ -372,6 +387,50 @@ function shareApp(e) {
     alert("Link kopiert!");
   }
 }
+
+var recognition = null;
+var isRecording = false;
+var LANG_CODES = { de: "de-DE", en: "en-US", es: "es-ES", fr: "fr-FR" };
+
+function initVoice() {
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { document.getElementById("micBtn").style.display = "none"; return; }
+  recognition = new SR();
+  recognition.continuous = false;
+  recognition.interimResults = false;
+  recognition.onresult = function(e) {
+    var transcript = e.results[0][0].transcript;
+    inputEl.value = transcript;
+    inputEl.style.height = "auto";
+    inputEl.style.height = Math.min(inputEl.scrollHeight, 120) + "px";
+    stopRecording();
+    sendMessage();
+  };
+  recognition.onerror = function() { stopRecording(); };
+  recognition.onend = function() { stopRecording(); };
+}
+
+function toggleRecording(e) {
+  if (e) { e.preventDefault(); e.stopPropagation(); }
+  if (isRecording) { stopRecording(); } else { startRecording(); }
+}
+
+function startRecording() {
+  if (!recognition) return;
+  recognition.lang = LANG_CODES[currentLang] || "de-DE";
+  try { recognition.start(); } catch(err) { return; }
+  isRecording = true;
+  document.getElementById("micBtn").classList.add("recording");
+}
+
+function stopRecording() {
+  if (recognition && isRecording) { try { recognition.stop(); } catch(err) {} }
+  isRecording = false;
+  var btn = document.getElementById("micBtn");
+  if (btn) btn.classList.remove("recording");
+}
+
+initVoice();
 
 var savedLang = localStorage.getItem(LANG_KEY);
 if (savedLang && T[savedLang]) { setLang(savedLang, null); }
