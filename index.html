@@ -79,6 +79,10 @@
     .danke-btn:hover { background:var(--accent); color:white; border-color:var(--accent); }
     .footer-clear { background:none; border:none; color:#ccc; font-family:'Jost',sans-serif; font-size:11px; cursor:pointer; padding:2px 8px; touch-action:manipulation; }
     .footer-clear:hover { color:#c05050; }
+    .donate-divider { width:100%; max-width:300px; border:none; border-top:1px solid var(--border); margin:16px 0 14px; }
+    .donate-bank { background:var(--accent-soft); border:1px solid var(--border); border-radius:14px; padding:14px 18px; width:100%; max-width:300px; text-align:left; font-family:'Jost',sans-serif; font-size:12px; color:var(--text-muted); line-height:1.8; }
+    .donate-bank strong { color:var(--text); font-weight:500; display:block; margin-bottom:4px; font-size:13px; }
+    .donate-bank .donate-note { margin-top:10px; font-size:11px; color:var(--text-muted); line-height:1.7; border-top:1px solid var(--border); padding-top:8px; }
     .share-btn { background:none; border:1px solid var(--border); color:var(--text-muted); font-family:'Jost',sans-serif; font-size:12px; font-weight:300; padding:6px 16px; border-radius:20px; cursor:pointer; touch-action:manipulation; transition:all 0.2s; }
     .share-btn:hover { border-color:var(--accent); color:var(--accent-dark); }
     .error-banner { background:#fdf0f0; border:1px solid #f0c0c0; color:#c05050; border-radius:12px; padding:10px 14px; font-size:13px; margin-top:8px; }
@@ -111,11 +115,15 @@
     &#127466;&#127480; &iexcl;Muchas gracias por tu apoyo!<br>
     &#127467;&#127479; Merci beaucoup pour votre soutien!
   </div>
-  <div class="donate-grid">
-    <a class="donate-amt" href="https://paypal.me/IchsagJA/5" target="_blank" rel="noopener">5 &euro;</a>
-    <a class="donate-amt" href="https://paypal.me/IchsagJA/10" target="_blank" rel="noopener">10 &euro;</a>
-    <a class="donate-amt" href="https://paypal.me/IchsagJA/20" target="_blank" rel="noopener">20 &euro;</a>
-    <a class="donate-free" href="https://paypal.me/IchsagJA" target="_blank" rel="noopener" id="donateFreeBtn">Frei w&auml;hlbar</a>
+  <a class="donate-amt" href="https://paypal.me/IchsagJA" target="_blank" rel="noopener" style="display:block;width:100%;max-width:300px;text-align:center;margin-bottom:4px;">PayPal</a>
+  <hr class="donate-divider" />
+  <div class="donate-bank">
+    <strong>&#127968; &Uuml;berweisung</strong>
+    Andreas Kendlinger<br>
+    IBAN: LU73 8150 0000 0000 3088
+    <div class="donate-note">
+      &#128221; M&ouml;chtest du eine Rechnung? Bitte vermerke es im Verwendungszweck oder schreib uns kurz an <a href="mailto:info@ich-sag-ja-zu-mir.de" style="color:var(--accent);">info@ich-sag-ja-zu-mir.de</a>
+    </div>
   </div>
   <button class="donate-back" id="donateBackBtn" ontouchend="closeDonate(event)" onclick="closeDonate(event)">&#8592; Zur&uuml;ck</button>
 </div>
