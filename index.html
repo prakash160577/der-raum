@@ -392,6 +392,13 @@ function shareApp(e) {
 
 var savedLang = localStorage.getItem(LANG_KEY);
 if (savedLang && T[savedLang]) { setLang(savedLang, null); }
+
+// Service Worker registrieren für automatische Cache-Updates
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').then(reg => {
+    reg.update(); // Beim Laden immer auf Updates prüfen
+  });
+}
 </script>
 </body>
 </html>
