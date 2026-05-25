@@ -76,9 +76,9 @@
     #sendBtn:disabled { opacity:0.4; cursor:not-allowed; }
     #sendBtn svg { width:20px; height:20px; fill:white; pointer-events:none; }
     .app-footer { width:100%; max-width:760px; border-top:1px solid var(--border); padding:8px 16px 12px; display:flex; flex-direction:column; align-items:center; gap:5px; }
-    .footer-support { font-size:14px; color:#c17a50; font-weight:400; text-align:center; letter-spacing:0.2px; }
-    .footer-support a { color:#a85e30; text-decoration:none; border-bottom:1px solid rgba(193,122,80,0.3); font-weight:500; }
-    .footer-support a:hover { color:#8a4a20; }
+    .footer-support { font-size:12px; color:var(--text-muted); font-weight:300; text-align:center; letter-spacing:0.2px; }
+    .footer-support a { color:var(--accent-dark); text-decoration:none; border-bottom:1px solid var(--border); font-weight:400; }
+    .footer-support a:hover { color:var(--accent); }
     .danke-btn { background:var(--accent-soft); border:1px solid var(--border); color:var(--accent-dark); font-family:'Jost',sans-serif; font-size:13px; font-weight:400; padding:8px 24px; border-radius:30px; cursor:pointer; display:inline-block; transition:all 0.2s; touch-action:manipulation; }
     .danke-btn:hover { background:var(--accent); color:white; border-color:var(--accent); }
     .footer-clear { background:none; border:none; color:#ccc; font-family:'Jost',sans-serif; font-size:11px; cursor:pointer; padding:2px 8px; touch-action:manipulation; }
@@ -149,7 +149,7 @@
     </div>
   </div>
   <div class="app-footer">
-    <div class="footer-support">Meine kleine Unterst&uuml;tzung f&uuml;r <a href="https://ich-sag-ja-zu-mir.de" target="_blank" rel="noopener">ich-sag-JA-zu-mir.de</a></div>
+    <div class="footer-support"><a href="https://ich-sag-ja-zu-mir.de" target="_blank" rel="noopener">ich-sag-ja-zu-mir.de</a></div>
     <button class="danke-btn" id="booksBtn" ontouchend="openBooks(event)" onclick="openBooks(event)">📚 Die Bücher</button>
     <button class="share-btn" id="shareBtn" ontouchend="shareApp(event)" onclick="shareApp(event)">&#128279; App teilen</button>
     <button class="footer-clear" id="clearBtn">&#128465; Verlauf l&ouml;schen</button>
