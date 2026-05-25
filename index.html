@@ -25,17 +25,21 @@
     .lang-btn { background:white; border:1px solid var(--border); color:var(--text); font-family:'Jost',sans-serif; font-size:15px; font-weight:400; padding:14px; border-radius:14px; cursor:pointer; box-shadow:var(--shadow); transition:all 0.2s; touch-action:manipulation; }
     .lang-btn:hover { background:var(--accent-soft); border-color:var(--accent); }
     #langBackBtn { margin-top:20px; background:none; border:none; color:var(--text-muted); font-family:'Jost',sans-serif; font-size:13px; cursor:pointer; padding:8px 16px; touch-action:manipulation; display:none; }
-    #donateScreen { position:fixed; inset:0; background:var(--bg); display:none; flex-direction:column; align-items:center; justify-content:center; z-index:150; padding:32px; text-align:center; }
-    #donateScreen.active { display:flex; }
-    #donateScreen img { width:90px; margin-bottom:16px; border-radius:18px; box-shadow:var(--shadow); }
-    #donateScreen h2 { font-family:'Cormorant Garamond',serif; font-weight:300; font-size:22px; margin-bottom:10px; font-style:italic; color:var(--accent-dark); }
-    .donate-thanks { font-size:13px; color:var(--text-muted); margin-bottom:4px; font-weight:300; line-height:1.9; max-width:300px; }
-    .donate-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; width:100%; max-width:300px; margin:16px 0 10px; }
-    .donate-amt { background:white; border:1px solid var(--border); color:var(--accent-dark); font-family:'Jost',sans-serif; font-size:18px; font-weight:400; padding:16px; border-radius:14px; cursor:pointer; box-shadow:var(--shadow); transition:all 0.2s; text-decoration:none; display:block; touch-action:manipulation; }
-    .donate-amt:hover { background:var(--accent); color:white; border-color:var(--accent); }
-    .donate-free { background:var(--accent-soft); border:1px solid var(--border); color:var(--accent-dark); font-family:'Jost',sans-serif; font-size:14px; font-weight:400; padding:12px 24px; border-radius:14px; cursor:pointer; box-shadow:var(--shadow); transition:all 0.2s; text-decoration:none; display:inline-block; touch-action:manipulation; }
-    .donate-free:hover { background:var(--accent); color:white; border-color:var(--accent); }
-    .donate-back { margin-top:16px; background:none; border:none; color:var(--text-muted); font-family:'Jost',sans-serif; font-size:13px; cursor:pointer; padding:8px 16px; touch-action:manipulation; }
+    #booksScreen { position:fixed; inset:0; background:var(--bg); display:none; flex-direction:column; align-items:center; justify-content:center; z-index:150; padding:32px 24px; text-align:center; overflow-y:auto; }
+    #booksScreen.active { display:flex; }
+    #booksScreen h2 { font-family:'Cormorant Garamond',serif; font-weight:300; font-size:24px; margin-bottom:6px; color:var(--accent-dark); font-style:italic; }
+    .books-eyebrow { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--accent); margin-bottom:16px; }
+    .books-subtitle { font-size:13px; color:var(--text-muted); margin-bottom:28px; font-weight:300; line-height:1.7; max-width:320px; }
+    .books-grid { display:flex; flex-direction:column; gap:14px; width:100%; max-width:340px; }
+    .book-card { background:white; border:1px solid var(--border); border-radius:18px; padding:20px 22px; text-align:left; box-shadow:var(--shadow); text-decoration:none; color:var(--text); transition:all 0.25s; display:block; }
+    .book-card:hover { border-color:var(--accent); box-shadow:0 4px 20px rgba(80,100,80,0.13); transform:translateY(-2px); }
+    .book-nr { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--accent); margin-bottom:6px; display:block; }
+    .book-title { font-family:'Cormorant Garamond',serif; font-size:19px; font-weight:400; line-height:1.3; margin-bottom:6px; }
+    .book-title em { font-style:italic; color:var(--accent-dark); }
+    .book-desc { font-size:12px; color:var(--text-muted); font-weight:300; line-height:1.6; margin-bottom:12px; }
+    .book-link { font-size:12px; color:var(--accent); font-weight:400; }
+    .books-more { font-size:12px; color:var(--text-muted); margin-top:18px; font-weight:300; font-style:italic; }
+    .books-back { margin-top:20px; background:none; border:none; color:var(--text-muted); font-family:'Jost',sans-serif; font-size:13px; cursor:pointer; padding:8px 16px; touch-action:manipulation; }
     #app { display:none; width:100%; flex-direction:column; align-items:center; min-height:100vh; }
     header { width:100%; max-width:760px; padding:20px 20px 12px; text-align:center; border-bottom:1px solid var(--border); position:relative; }
     .lang-switch { position:absolute; top:16px; right:14px; background:none; border:1px solid var(--border); border-radius:20px; padding:5px 10px; font-size:13px; cursor:pointer; color:var(--text-muted); touch-action:manipulation; transition:all 0.2s; }
@@ -79,10 +83,6 @@
     .danke-btn:hover { background:var(--accent); color:white; border-color:var(--accent); }
     .footer-clear { background:none; border:none; color:#ccc; font-family:'Jost',sans-serif; font-size:11px; cursor:pointer; padding:2px 8px; touch-action:manipulation; }
     .footer-clear:hover { color:#c05050; }
-    .donate-divider { width:100%; max-width:300px; border:none; border-top:1px solid var(--border); margin:16px 0 14px; }
-    .donate-bank { background:var(--accent-soft); border:1px solid var(--border); border-radius:14px; padding:14px 18px; width:100%; max-width:300px; text-align:left; font-family:'Jost',sans-serif; font-size:12px; color:var(--text-muted); line-height:1.8; }
-    .donate-bank strong { color:var(--text); font-weight:500; display:block; margin-bottom:4px; font-size:13px; }
-    .donate-bank .donate-note { margin-top:10px; font-size:11px; color:var(--text-muted); line-height:1.7; border-top:1px solid var(--border); padding-top:8px; }
     .share-btn { background:none; border:1px solid var(--border); color:var(--text-muted); font-family:'Jost',sans-serif; font-size:12px; font-weight:300; padding:6px 16px; border-radius:20px; cursor:pointer; touch-action:manipulation; transition:all 0.2s; }
     .share-btn:hover { border-color:var(--accent); color:var(--accent-dark); }
     .error-banner { background:#fdf0f0; border:1px solid #f0c0c0; color:#c05050; border-radius:12px; padding:10px 14px; font-size:13px; margin-top:8px; }
@@ -106,26 +106,26 @@
   <button id="langBackBtn" ontouchend="closeLangScreen(event)" onclick="closeLangScreen(event)">&#8592; Zur&uuml;ck</button>
 </div>
 
-<div id="donateScreen">
-  <img src="/icon-512.png" alt="Ich sag JA" />
-  <h2>Vielen Dank &ndash; Thank you &ndash; Gracias &ndash; Merci</h2>
-  <div class="donate-thanks">
-    &#127465;&#127466; Vielen Dank f&uuml;r deine Unterst&uuml;tzung!<br>
-    &#127468;&#127463; Thank you so much for your support!<br>
-    &#127466;&#127480; &iexcl;Muchas gracias por tu apoyo!<br>
-    &#127467;&#127479; Merci beaucoup pour votre soutien!
+<div id="booksScreen">
+  <div class="books-eyebrow">Ich sag JA zu mir</div>
+  <h2>Die Buchreihe</h2>
+  <p class="books-subtitle">Verschiedene Türen in denselben Raum. Jedes Buch ein anderer Einstieg.</p>
+  <div class="books-grid">
+    <a class="book-card" href="https://www.amazon.de/Nur-ein-Moment-vergessene-zwischen-ebook/dp/B0H1ZXCDG1" target="_blank" rel="noopener">
+      <span class="book-nr">Buch 1 · Der vergessene Moment</span>
+      <div class="book-title">Nur ein Moment</div>
+      <p class="book-desc">Werkzeuge für mehr Frieden und Lebensqualität – kurz erlebbar gemacht.</p>
+      <span class="book-link">Auf Amazon lesen →</span>
+    </a>
+    <a class="book-card" href="https://www.amazon.de/Stille-ist-ein-Raum-Dir-ebook/dp/B0H2QCB195" target="_blank" rel="noopener">
+      <span class="book-nr">Buch 2 · Der vergessene Moment</span>
+      <div class="book-title">Stille ist ein Raum in Dir</div>
+      <p class="book-desc">Ruhe. Klarheit. Rückkehr zu Dir. Die erste Vertiefung aus Buch 1.</p>
+      <span class="book-link">Auf Amazon lesen →</span>
+    </a>
   </div>
-  <a class="donate-amt" href="https://paypal.me/IchsagJA" target="_blank" rel="noopener" style="display:block;width:100%;max-width:300px;text-align:center;margin-bottom:4px;">PayPal</a>
-  <hr class="donate-divider" />
-  <div class="donate-bank">
-    <strong>&#127968; &Uuml;berweisung</strong>
-    Andreas Kendlinger<br>
-    IBAN: LU73 8150 0000 0000 3088
-    <div class="donate-note">
-      &#128221; M&ouml;chtest du eine Rechnung? Bitte vermerke es im Verwendungszweck oder schreib uns kurz an <a href="mailto:info@ich-sag-ja-zu-mir.de" style="color:var(--accent);">info@ich-sag-ja-zu-mir.de</a>
-    </div>
-  </div>
-  <button class="donate-back" id="donateBackBtn" ontouchend="closeDonate(event)" onclick="closeDonate(event)">&#8592; Zur&uuml;ck</button>
+  <p class="books-more">Die Reihe wächst. Weitere Bücher folgen.</p>
+  <button class="books-back" id="booksBackBtn">← Zurück</button>
 </div>
 
 <div id="app">
@@ -150,7 +150,7 @@
   </div>
   <div class="app-footer">
     <div class="footer-support">Meine kleine Unterst&uuml;tzung f&uuml;r <a href="https://ich-sag-ja-zu-mir.de" target="_blank" rel="noopener">ich-sag-JA-zu-mir.de</a></div>
-    <button class="danke-btn" id="dankeBtn" ontouchend="openDonate(event)" onclick="openDonate(event)">Danke</button>
+    <button class="danke-btn" id="booksBtn" ontouchend="openBooks(event)" onclick="openBooks(event)">📚 Die Bücher</button>
     <button class="share-btn" id="shareBtn" ontouchend="shareApp(event)" onclick="shareApp(event)">&#128279; App teilen</button>
     <button class="footer-clear" id="clearBtn">&#128465; Verlauf l&ouml;schen</button>
   </div>
@@ -215,16 +215,16 @@ function closeLangScreen(e) {
   document.getElementById("langScreen").classList.add("hidden");
 }
 
-function openDonate(e) {
+function openBooks(e) {
   if (e) { e.preventDefault(); e.stopPropagation(); }
   var t = T[currentLang];
-  document.getElementById("donateBackBtn").innerHTML = t.backBtn;
-  document.getElementById("donateScreen").classList.add("active");
+  document.getElementById("booksBackBtn").innerHTML = t.backBtn;
+  document.getElementById("booksScreen").classList.add("active");
 }
 
-function closeDonate(e) {
+function closeBooks(e) {
   if (e) { e.preventDefault(); e.stopPropagation(); }
-  document.getElementById("donateScreen").classList.remove("active");
+  document.getElementById("booksScreen").classList.remove("active");
 }
 
 function applyTranslations() {
@@ -232,7 +232,7 @@ function applyTranslations() {
   document.getElementById("hEyebrow").innerHTML = t.eyebrow;
   document.getElementById("hSubtitle").innerHTML = t.subtitle;
   document.getElementById("userInput").placeholder = t.placeholder;
-  document.getElementById("dankeBtn").textContent = t.danke;
+  document.getElementById("booksBtn").textContent = t.danke;
   document.getElementById("clearBtn").innerHTML = t.clear;
   document.getElementById("micHint").innerHTML = t.micHint;
   var sugg = document.getElementById("suggestions");
